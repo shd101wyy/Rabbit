@@ -1,0 +1,50 @@
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+html h1,
+body h1,
+#app h1 {
+  font-size: 2.4em;
+  font-weight: 300;
+  padding-bottom: 0.3em;
+}
+html h2,
+body h2,
+#app h2 {
+  font-size: 1.8em;
+  font-weight: 400;
+  padding-bottom: 0.3em;
+}
+html h3,
+body h3,
+#app h3 {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+html h4,
+body h4,
+#app h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+html h5,
+body h5,
+#app h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+html h6,
+body h6,
+#app h6 {
+  font-size: 1.0em;
+  font-weight: 600;
+}
+* {
+  box-sizing: border-box;
+}

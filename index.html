@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title> Newty </title>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+
+  <!-- codemirror -->
+  <!-- <link href="css/codemirror.css"  rel="stylesheet"> -->
+
+  <!-- socket.io -->
+
+  <!-- font aweasome -->
+  <link rel="stylesheet" href="./lib/font-awesome/css/font-awesome.min.css">
+
+
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<!-- jQuery -->
+<script>
+window.$ = window.jQuery = window.jquery =  require('./lib/jquery-3.1.1.min.js')
+</script>
+
+<!-- masonry -->
+<!-- <script src="./lib/masonry.min.js"></script> -->
+<script>
+window.Masonry = require('masonry-layout')
+</script>
+
+<!-- bundle -->
+<script>
+require('./bundle.js')
+</script>
+
+<script>
+
+const {remote} = require('electron')
+const {Menu, MenuItem} = remote
+
+let rightClickPosition = null
+
+const menu = new Menu()
+const menuItem = new MenuItem({
+  label: 'Inspect Element',
+  click: () => {
+    remote.getCurrentWindow().inspectElement(rightClickPosition.x, rightClickPosition.y)
+  }
+})
+menu.append(menuItem)
+
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault()
+  rightClickPosition = {x: e.x, y: e.y}
+  menu.popup(remote.getCurrentWindow())
+}, false)
+
+</script>
+</html>

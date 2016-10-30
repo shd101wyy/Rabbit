@@ -1,0 +1,1 @@
+webpack --config webpack.production.js --progress -p
