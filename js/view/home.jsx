@@ -10,6 +10,7 @@ import NavDiv from './nav_div.jsx'
 // import FeedDialog from './feed_dialog.jsx'
 // import ArticlePanel from './article_panel.jsx'
 import SearchPage from './search_page.jsx'
+import FeedPage from './feed_page.jsx'
 
 import homeAPI from '../api/home_api.js'
 
@@ -27,7 +28,7 @@ class Home extends React.Component {
       loadingFeeds: false,
       currentPage: 0, // 10 feeds per page
       noMoreFeeds: false,
-      page: 'SEARCH_PAGE'
+      page: 'SEARCH_PAGE' // SEARCH_PAGE | FEED_PAGE | NOTIFICATION_PAGE
     }
 
     this.showSearchResults = this.showSearchResults.bind(this)
@@ -41,12 +42,12 @@ class Home extends React.Component {
     this.hideArticle = this.hideArticle.bind(this)
     this.handleScroll = this.handleScroll.bind(this)
     this.getMoreFeeds = this.getMoreFeeds.bind(this)
+    this.setPage = this.setPage.bind(this)
   }
 
   componentDidMount() {
-    /*
     homeAPI.getHomePageData((data) => {
-      // console.log(data)
+      console.log(data)
       if (data.success) {
         let subscriptions = data.data
         subscriptions = [
@@ -64,20 +65,16 @@ class Home extends React.Component {
       }
     })
 
-    this.homeDOM = ReactDOM.findDOMNode(this.refs['home-dom'])
-    this.homeDOM.addEventListener('scroll', this.handleScroll)
-    */
-    /*
-    ipcRenderer.send('get-subscriptions')
-    ipcRenderer.on('receive-subscriptions', (event, data)=> {
-      const {subscriptions} = data
-    })
-    */
-    this.homeDOM = ReactDOM.findDOMNode(this.refs['home-dom'])
+    // this.homeDOM = ReactDOM.findDOMNode(this.refs['home-dom'])
+    // this.homeDOM.addEventListener('scroll', this.handleScroll)
   }
 
   componentWillUnmount() {
-    this.homeDOM.removeEventListener('scroll', this.handleScroll)
+    // this.homeDOM.removeEventListener('scroll', this.handleScroll)
+  }
+
+  setPage(page) {
+    this.setState({page})
   }
 
   handleScroll(event) {
@@ -143,7 +140,7 @@ class Home extends React.Component {
             loadingFeeds: false,
             currentPage: 0
           }, () => {
-            this.handleScroll()
+            // this.handleScroll()
           })
         }
       })
@@ -249,13 +246,19 @@ class Home extends React.Component {
     switch (this.state.page) {
       case 'SEARCH_PAGE':
         page = <SearchPage></SearchPage>
+        break
+      case 'FEED_PAGE':
+        page = <FeedPage subscriptions={this.state.subscriptions}
+                          dis={this.state.dis}
+                          retrieveDISFeeds={this.retrieveDISFeeds}></FeedPage>
+        break
       default:
         break
     }
 
     return <div className={className} ref="home-dom">
       {/* <TopBar showSearchResults={this.showSearchResults} hideSearchResults={this.hideSearchResults} composeNewFeed={this.composeNewFeed}></TopBar> */}
-      <NavDiv subscriptions={this.state.subscriptions} currentlyViewingDIS={this.state.dis} retrieveDISFeeds={this.retrieveDISFeeds}></NavDiv>
+      <NavDiv page={this.state.page} setPage={this.setPage}></NavDiv>
       {page}
       {/*
       {this.state.showSearchResults

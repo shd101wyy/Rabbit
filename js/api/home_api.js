@@ -1,6 +1,8 @@
+const url = require('url')
+
 const homeAPI = {
   search: function(searchText, callback) {
-    $.ajax('/search', {
+    $.ajax(url.resolve(IP, '/search'), {
       'type': 'POST',
       dataType: 'json',
       data: {
@@ -20,7 +22,7 @@ const homeAPI = {
   },
 
   getHomePageData: function(callback) {
-    $.ajax('/get_home_page_data', {
+    $.ajax(url.resolve(IP, '/get_home_page_data'), {
       'type': 'GET',
       dataType: 'json',
       success: function(res) {
@@ -37,7 +39,7 @@ const homeAPI = {
   },
 
   getSubscriptions: function(callback) {
-    $.ajax('/get_subscriptions', {
+    $.ajax(url.resolve(IP, '/get_subscriptions'), {
       'type': 'GET',
       dataType: 'json',
       success: function(res) {
@@ -55,7 +57,7 @@ const homeAPI = {
 
 
   follow: function(source, callback) {
-    $.ajax('/follow', {
+    $.ajax(url.resolve(IP, '/follow'), {
       'type': 'POST',
       dataType: 'json',
       data: {
@@ -75,7 +77,7 @@ const homeAPI = {
   },
 
   unfollow: function(source, callback) {
-    $.ajax('/unfollow', {
+    $.ajax(url.resolve(IP, '/unfollow'), {
       'type': 'POST',
       dataType: 'json',
       data: {
@@ -95,7 +97,7 @@ const homeAPI = {
   },
 
   getFeeds: function({source, page=0, count=10}, callback) {
-    $.ajax(`/get_feeds?source=${source}&page=${page}&count=${count}`, {
+    $.ajax(url.resolve(IP, `/get_feeds?source=${source}&page=${page}&count=${count}`), {
       'type': 'GET',
       dataType: 'json',
       success: function(res) {
@@ -112,7 +114,7 @@ const homeAPI = {
   },
 
   postFeed: function(feedData, callback) {
-    $.ajax('/post_feed', {
+    $.ajax(url.resolve(IP, '/post_feed'), {
       'type': 'POST',
       dataType: 'json',
       data: {

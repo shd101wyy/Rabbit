@@ -1,5 +1,5 @@
 // main: ./entry.less
-@bg: #5a821a;
+@bg: #3F4055;
 @nav-width: 96px;
 
 .nav-div {
@@ -59,36 +59,11 @@
 
     &:hover {
       cursor: pointer;
-      color: #eee;
+      color: #ccc;
     }
-  }
-
-  .title {
-    margin-bottom: 12px;
-    font-weight: 500;
-    color: #ddd;
-  }
-
-  .dis-source {
-    padding: 4px;
-    margin-bottom: 2px;
 
     &.selected {
-      background-color: contrast(@bg, darken(@bg, 10%), lighten(@bg, 10%));
+      color: #eee;
     }
-
-    &:hover {
-      cursor: pointer;
-      background-color: contrast(@bg, darken(@bg, 5%), lighten(@bg, 5%));
-    }
-
-    .dis-source-image {
-      float: left;
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-    }
-
-    .dis-title {}
   }
 }
