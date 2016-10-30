@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import {browserHistory} from 'react-router'
 const {ipcRenderer} = require('electron')
 
+import userAPI from '../api/user_api.js'
+
 class App extends React.Component {
   componentDidMount() {
     ipcRenderer.send('check-auth')
@@ -11,10 +13,17 @@ class App extends React.Component {
       if (!data.success) {
         browserHistory.push('/login')
       } else {
-        browserHistory.push('/')
+        const {email, password} = data.data
+        userAPI.login(email, password, function(data) {
+          if (data.success) {
+            browserHistory.push('/')
+          } else {
+            browserHistory.push('/login')
+          }
+        })
       }
     })
-    browserHistory.push('/')
+    browserHistory.push('/login')
   }
   render() {
     return  <div>

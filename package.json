@@ -19,6 +19,8 @@
   "dependencies": {
     "async": "^2.1.2",
     "autolinker": "^1.2.1",
+    "highlight.js": "^9.7.0",
+    "jQuery": "^1.7.4",
     "masonry-layout": "^4.1.1",
     "nedb": "^1.8.0",
     "node-notifier": "^4.6.1",

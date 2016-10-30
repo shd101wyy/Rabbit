@@ -1,0 +1,94 @@
+// main: ./entry.less
+@bg: #5a821a;
+@nav-width: 96px;
+
+.nav-div {
+  width: @nav-width;
+  height: 100%;
+  min-height: 400px;
+  background-color: @bg;
+  color: #bbb;
+  padding: 12px 20px;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  text-align: center;
+  // overflow-y: scroll;
+  // -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  // -webkit-app-region: drag;
+  // -webkit-user-select: none;
+  /*
+  .search-box-div {
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    input {
+      width: 100%;
+      padding: 4px 6px;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      color: #444;
+      font-size: 12px;
+    }
+  }
+  */
+
+  .profile-pic {
+    width: 52px;
+    height: 52px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 6px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+
+    .icon {
+      font-size: 26px;
+      width: 26px;
+    }
+
+    .content {
+      font-size: 16px;
+      margin-left: 12px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: #eee;
+    }
+  }
+
+  .title {
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #ddd;
+  }
+
+  .dis-source {
+    padding: 4px;
+    margin-bottom: 2px;
+
+    &.selected {
+      background-color: contrast(@bg, darken(@bg, 10%), lighten(@bg, 10%));
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: contrast(@bg, darken(@bg, 5%), lighten(@bg, 5%));
+    }
+
+    .dis-source-image {
+      float: left;
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+
+    .dis-title {}
+  }
+}
