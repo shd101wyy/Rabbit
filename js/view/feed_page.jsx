@@ -16,7 +16,11 @@ class FeedPage extends React.Component {
       dis = this.props.dis
 
     return <div className="page feed-page">
-      <div className="header"></div>
+      <div className="header">
+        <div className="column-1-1">
+          Home
+        </div>
+      </div>
       {/*
       <div className="dis-list">
         {subscriptions.map((s) => {

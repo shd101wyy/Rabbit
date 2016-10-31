@@ -153,6 +153,33 @@ body h6,
 .container .info span .fa {
   color: #EF3B3A;
 }
+.page {
+  margin-left: 96px;
+  height: 100%;
+}
+.page .header {
+  width: 100%;
+  height: 48px;
+}
+.page .header .column-1-1 {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  text-align: center;
+}
+.page .header .column-1-2 {
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  float: left;
+  text-align: center;
+}
+.page .container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
 .nav-div {
   width: 96px;
   height: 100%;
@@ -407,6 +434,7 @@ body h6,
   width: 100%;
   position: relative;
   padding: 0;
+  margin-top: 48px;
   *zoom: 1;
 }
 .feed-div:after,
@@ -437,48 +465,44 @@ body h6,
   transition: opacity 0.3s linear;
   width: 100%;
   max-width: 100%;
-  margin: 0 12px 12px 0;
+  margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.870588);
+  color: rgba(0, 0, 0, 0.85);
   background-color: #fff;
   border-radius: 3px;
   word-wrap: break-word;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.18);
   z-index: 1;
+  border-bottom: 1px solid rgba(63, 64, 85, 0.25);
 }
-@media (max-width: 768px) {
-  .feed-div .feed {
-    margin-bottom: 8px;
-    width: 100%;
-  }
-}
-.feed-div .feed .header {
+.feed-div .feed .feed-header {
+  position: relative;
   font-size: 12px;
   margin-bottom: 4px;
   padding: 8px;
   *zoom: 1;
 }
-.feed-div .feed .header:after,
-.feed-div .feed .header:before {
+.feed-div .feed .feed-header:after,
+.feed-div .feed .feed-header:before {
   display: table;
   line-height: 0;
   content: "";
 }
-.feed-div .feed .header:after {
+.feed-div .feed .feed-header:after {
   clear: both;
 }
-.feed-div .feed .header .author-image {
+.feed-div .feed .feed-header .author-image {
   float: left;
   width: 32px;
   height: 32px;
   margin-right: 12px;
   border-radius: 4px;
 }
-.feed-div .feed .header .author {
+.feed-div .feed .feed-header .author {
   font-weight: 600;
   margin-right: 12px;
 }
-.feed-div .feed .header .date {
+.feed-div .feed .feed-header .date {
   color: #8899a6;
 }
 .feed-div .feed .title {
@@ -583,20 +607,6 @@ body h6,
 .home .navbar #searchbox {
   margin-right: 12px;
 }
-.page {
-  margin-left: 96px;
-  height: 100%;
-}
-.page .header {
-  width: 100%;
-  height: 48px;
-}
-.page .container {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-}
 .search-page .header .search-box {
   width: 100%;
   height: 100%;
@@ -613,6 +623,22 @@ body h6,
 }
 #searchbox {
   width: 256px;
+}
+.feed-page .header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(63, 64, 85, 0.25);
+  position: fixed;
+  top: 0;
+  left: 96px;
+  width: calc(100% -  96px);
+  z-index: 10;
+}
+.feed-page .header .column-1-1 {
+  padding: 12px;
+  font-size: 16px;
+}
+.feed-page .header .column-1-1:hover {
+  cursor: pointer;
 }
 .feed-page .dis-list {
   width: 200px;

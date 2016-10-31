@@ -77,7 +77,7 @@ class Feed extends React.Component {
     }
 
     return <div className="feed">
-      <div className="header">
+      <div className="feed-header">
         <img className="author-image" src={feed.image || 'https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-48.png'}/>
         <div className="author">{feed.author || ''}</div>
         <div className="date">{utility.formatDate(feed.updated)}</div>

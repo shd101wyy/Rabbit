@@ -1,0 +1,36 @@
+// main: ./entry.less
+
+@page-header-height: 48px;
+
+.page {
+  margin-left: @nav-width;
+  height: 100%;
+
+  .header {
+    width: 100%;
+    // width: calc(~"100% - "@nav-width);
+    height: @page-header-height;
+
+    .column-1-1 {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      text-align: center;
+    }
+
+    .column-1-2 {
+      width: 50%;
+      height: 100%;
+      margin: 0;
+      float: left;
+      text-align: center;
+    }
+  }
+
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+  }
+}

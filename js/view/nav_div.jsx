@@ -29,6 +29,9 @@ class NavDiv extends React.Component {
       <div className={"section" + (page === 'SEARCH_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'SEARCH_PAGE')}>
         <i className="icon fa fa-search" aria-hidden="true"></i>
       </div>
+      <div className={"section" + (page === 'SUBSCRIPTIONS_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'NOTIFICATION_PAGE')}>
+        <i className="icon fa fa-address-book" aria-hidden="true"></i>
+      </div>
       <div className={"section" + (page === 'NOTIFICATION_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'NOTIFICATION_PAGE')}>
         <i className="icon fa fa-bell" aria-hidden="true"></i>
       </div>
