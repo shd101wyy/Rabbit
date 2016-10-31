@@ -7,10 +7,6 @@ class FeedPage extends React.Component {
     super()
   }
 
-  clickDIS(source) {
-    this.props.retrieveDISFeeds(source)
-  }
-
   render() {
     let subscriptions = this.props.subscriptions,
       dis = this.props.dis
@@ -21,28 +17,13 @@ class FeedPage extends React.Component {
           Home
         </div>
       </div>
-      {/*
-      <div className="dis-list">
-        {subscriptions.map((s) => {
-          return <div className={"dis-source " + (s.source === dis.source
-            ? 'selected'
-            : '')} onClick={this.clickDIS.bind(this, s.source)}>
-            <img src={s.image || "https://www.google.com/s2/favicons?domain=javascriptweekly.com&alt=feed"} className="dis-source-image"/>
-            <div className="dis-title">
-              {s.title}
-            </div>
-          </div>
-        })}
-      </div>*/}
-      <FeedDiv dis={this.props.dis}> </FeedDiv>
+      <FeedDiv source={this.props.source}> </FeedDiv>
     </div>
   }
 }
 
 FeedPage.propTypes = {
-  subscriptions: React.PropTypes.array.isRequired,
-  dis: React.PropTypes.object.isRequired,
-  retrieveDISFeeds: React.PropTypes.func.isRequired
+  source: React.PropTypes.string.isRequired,
 }
 
 export default FeedPage

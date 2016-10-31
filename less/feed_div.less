@@ -2,9 +2,11 @@
 
 .feed-div {
   width: 100%;
+  height: calc(~"100% - "@page-header-height);
   position: relative;
   padding: 0;
   margin-top: @page-header-height;
+  overflow-y: scroll;
   .clearfix();
 
   .section-title {

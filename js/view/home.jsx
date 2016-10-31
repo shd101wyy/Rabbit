@@ -22,7 +22,6 @@ class Home extends React.Component {
       showFeedDialog: false,
       showArticlePanel: false,
       searchResults: null,
-      dis: {},
       subscriptions: [],
       feed: null, // current viewing feed
       loadingFeeds: false,
@@ -32,7 +31,6 @@ class Home extends React.Component {
     }
 
     this.showSearchResults = this.showSearchResults.bind(this)
-    this.retrieveDISFeeds = this.retrieveDISFeeds.bind(this)
     this.hideSearchResults = this.hideSearchResults.bind(this)
     this.hideFeedDialog = this.hideFeedDialog.bind(this)
     this.refreshSubscriptions = this.refreshSubscriptions.bind(this)
@@ -40,12 +38,11 @@ class Home extends React.Component {
     this.postFeed = this.postFeed.bind(this)
     this.showArticle = this.showArticle.bind(this)
     this.hideArticle = this.hideArticle.bind(this)
-    this.handleScroll = this.handleScroll.bind(this)
-    this.getMoreFeeds = this.getMoreFeeds.bind(this)
     this.setPage = this.setPage.bind(this)
   }
 
   componentDidMount() {
+    /*
     homeAPI.getHomePageData((data) => {
       console.log(data)
       if (data.success) {
@@ -59,34 +56,17 @@ class Home extends React.Component {
         ].concat(subscriptions)
         this.setState({
           subscriptions
-        }, () => {
-          this.retrieveDISFeeds('localhost')
         })
       }
     })
-
-    // this.homeDOM = ReactDOM.findDOMNode(this.refs['home-dom'])
-    // this.homeDOM.addEventListener('scroll', this.handleScroll)
+    */
   }
 
   componentWillUnmount() {
-    // this.homeDOM.removeEventListener('scroll', this.handleScroll)
   }
 
   setPage(page) {
     this.setState({page})
-  }
-
-  handleScroll(event) {
-    if (this.state.loadingFeeds || this.state.noMoreFeeds || this.state.showSearchResults)
-      return
-    let scrollBottom = this.homeDOM.scrollTop + this.homeDOM.offsetHeight,
-      scrollHeight = this.homeDOM.scrollHeight
-
-    if (Math.abs(scrollBottom - scrollHeight) <= 100) {
-      console.log('load more feeds')
-      this.getMoreFeeds()
-    }
   }
 
   refreshSubscriptions() {
@@ -111,90 +91,6 @@ class Home extends React.Component {
     if (data && data.success) {
       this.setState({showSearchResults: true, searchResults: data.data})
     }
-  }
-
-  retrieveDISFeeds(source, opt = {}) { // first time retrieve DIS feeds
-    this.setState({
-      loadingFeeds: true,
-      noMoreFeeds: false
-    }, () => {
-      const page = opt.page || 0,
-        count = opt.count || 10
-
-      homeAPI.getFeeds({
-        source,
-        page,
-        count
-      }, (data) => {
-        // console.log(data)
-        if (data.success) {
-          let dis = data.data
-          dis.updated = new Date(dis.updated)
-          dis.feeds.forEach((d) => { // convert updated to Date
-            d.updated = new Date(d.updated)
-          })
-          dis.feeds.sort((a, b) => b.updated.getTime() - a.updated.getTime()) // sort feeds by Date
-          this.setState({
-            showSearchResults: false,
-            dis,
-            loadingFeeds: false,
-            currentPage: 0
-          }, () => {
-            // this.handleScroll()
-          })
-        }
-      })
-    })
-  }
-
-  getMoreFeeds() {
-    let source = this.state.dis.source,
-      currentPage = this.state.currentPage
-
-    this.setState({
-      loadingFeeds: true
-    }, () => {
-      homeAPI.getFeeds({
-        source,
-        page: currentPage + 1,
-        count: 10
-      }, (data) => {
-        let dis = data.data
-        if (!dis.feeds.length) { // no more feeds
-          return this.setState({
-            showSearchResults: false,
-            loadingFeeds: false,
-            currentPage: currentPage + 1,
-            noMoreFeeds: true
-          })
-        }
-        dis.updated = new Date(dis.updated)
-        dis.feeds.forEach((d) => { // convert updated to Date
-          d.updated = new Date(d.updated)
-        })
-
-        let oldFeeds = this.state.dis.feeds || []
-        let newFeeds = oldFeeds.concat(dis.feeds) // TODO: remove duplicate
-        newFeeds.sort((a, b) => b.updated.getTime() - a.updated.getTime())
-
-        for (let i = 0; i < newFeeds.length; i++) { // remove duplicate
-          if (i < newFeeds.length - 1 && newFeeds[i].id === newFeeds[i + 1].id) {
-            newFeeds.splice(i + 1, 1)
-            i -= 1
-          }
-        }
-
-        dis.feeds = newFeeds
-
-        this.setState({
-          showSearchResults: false,
-          dis,
-          loadingFeeds: false,
-          currentPage: currentPage + 1,
-          noMoreFeeds: false
-        })
-      })
-    })
   }
 
   hideSearchResults() {
@@ -248,9 +144,7 @@ class Home extends React.Component {
         page = <SearchPage></SearchPage>
         break
       case 'FEED_PAGE':
-        page = <FeedPage subscriptions={this.state.subscriptions}
-                          dis={this.state.dis}
-                          retrieveDISFeeds={this.retrieveDISFeeds}></FeedPage>
+        page = <FeedPage source={"localhost"}></FeedPage>
         break
       default:
         break
