@@ -11,6 +11,7 @@ import NavDiv from './nav_div.jsx'
 // import ArticlePanel from './article_panel.jsx'
 import SearchPage from './search_page.jsx'
 import FeedPage from './feed_page.jsx'
+import SubscriptionsPage from './subscriptions_page.jsx'
 
 import homeAPI from '../api/home_api.js'
 
@@ -27,13 +28,12 @@ class Home extends React.Component {
       loadingFeeds: false,
       currentPage: 0, // 10 feeds per page
       noMoreFeeds: false,
-      page: 'SEARCH_PAGE' // SEARCH_PAGE | FEED_PAGE | NOTIFICATION_PAGE
+      page: 'SEARCH_PAGE' // SEARCH_PAGE | FEED_PAGE | NOTIFICATION_PAGE | SUBSCRIPTIONS_PAGE
     }
 
     this.showSearchResults = this.showSearchResults.bind(this)
     this.hideSearchResults = this.hideSearchResults.bind(this)
     this.hideFeedDialog = this.hideFeedDialog.bind(this)
-    this.refreshSubscriptions = this.refreshSubscriptions.bind(this)
     this.composeNewFeed = this.composeNewFeed.bind(this)
     this.postFeed = this.postFeed.bind(this)
     this.showArticle = this.showArticle.bind(this)
@@ -67,23 +67,6 @@ class Home extends React.Component {
 
   setPage(page) {
     this.setState({page})
-  }
-
-  refreshSubscriptions() {
-    homeAPI.getSubscriptions((data) => {
-      console.log('get subscriptions: ', data)
-      if (data.success) {
-        let subscriptions = data.data
-        subscriptions = [
-          {
-            source: 'localhost',
-            image: null,
-            title: 'all feeds'
-          }
-        ].concat(subscriptions)
-        this.setState({subscriptions})
-      }
-    })
   }
 
   showSearchResults(data) {
@@ -146,6 +129,8 @@ class Home extends React.Component {
       case 'FEED_PAGE':
         page = <FeedPage source={"localhost"}></FeedPage>
         break
+      case 'SUBSCRIPTIONS_PAGE':
+        page = <SubscriptionsPage></SubscriptionsPage>
       default:
         break
     }

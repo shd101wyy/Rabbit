@@ -1,4 +1,5 @@
-const {app, BrowserWindow, globalShortcut, ipcMain} = require('electron')
+const {app, BrowserWindow, globalShortcut, ipcMain, protocol} = require('electron')
+const path = require('path')
 
 const user = require('./model/user.js')
 
@@ -39,12 +40,25 @@ function createWindow() {
   })
 }
 
+function initProtocal() {
+  protocol.registerFileProtocol('rabbit', (request, callback) => {
+    const url = request.url.substr(7)
+    callback({
+      path: path.normalize(`${__dirname}/${url}`)
+    })
+  }, (error) => {
+    if (error)
+      console.error('Failed to register protocol')
+  })
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function() {
   user.initialize(function() {
     createWindow()
+    initProtocal()
   })
 })
 
