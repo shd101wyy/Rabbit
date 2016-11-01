@@ -1,6 +1,6 @@
 // main: ./entry.less
 @bg: #3F4055;
-@nav-width: 96px;
+@nav-width: 78px;
 
 .nav-div {
   width: @nav-width;
@@ -8,7 +8,7 @@
   min-height: 400px;
   background-color: @bg;
   color: #bbb;
-  padding: 12px 20px;
+  padding: 12px 14px;
   position: fixed;
   top: 0;
   z-index: 10;
@@ -16,8 +16,9 @@
   // overflow-y: scroll;
   // -webkit-overflow-scrolling: touch;
   overflow: auto;
-  // -webkit-app-region: drag;
-  // -webkit-user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
   /*
   .search-box-div {
     width: 100%;
@@ -39,7 +40,7 @@
   .profile-pic {
     width: 52px;
     height: 52px;
-    margin-top: 24px;
+    margin-top: 48px;
     margin-bottom: 24px;
     border-radius: 6px;
   }

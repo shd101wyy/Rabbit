@@ -28,6 +28,10 @@ class SubscriptionsPage extends React.Component {
     })
   }
 
+  clickSubscription(source) {
+    console.log('source: ' + source)
+  }
+
   render() {
     const {subscriptions} = this.state
     return <div className="page subscriptions-page">
@@ -40,7 +44,7 @@ class SubscriptionsPage extends React.Component {
         {subscriptions.map((subscription)=> {
           const {title, source} = subscription
           let image = subscription.image || 'rabbit:///images/rss-icon.png'
-          return <div className="subscription-item">
+          return <div className="subscription-item" onClick={this.clickSubscription.bind(this, source)}>
             <img className="image" src={image} />
             <div className="name">{title}</div>
           </div>

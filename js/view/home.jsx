@@ -136,7 +136,6 @@ class Home extends React.Component {
     }
 
     return <div className={className} ref="home-dom">
-      {/* <TopBar showSearchResults={this.showSearchResults} hideSearchResults={this.hideSearchResults} composeNewFeed={this.composeNewFeed}></TopBar> */}
       <NavDiv page={this.state.page} setPage={this.setPage}></NavDiv>
       {page}
       {/*
