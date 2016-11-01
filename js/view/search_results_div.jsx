@@ -27,11 +27,10 @@ class DisSource extends React.Component {
     let dis = this.props.dis,
       source = dis.source
 
-    ipcRenderer.send('follow-dis', {source})
-    ipcRenderer.once('result-following-dis', (event, data)=> {
+    homeAPI.follow(source, (data)=> {
       if (data.success) {
         dis.following = true
-        dis.popularities = parseInt(dis.popularities) + 1
+        dis.popularities = (parseInt(dis.popularities) + 1) || 1
         this.forceUpdate()
       }
     })
@@ -41,8 +40,7 @@ class DisSource extends React.Component {
     let dis = this.props.dis,
       source = dis.source
 
-    ipcRenderer.send('unfollow-dis', {source})
-    ipcRenderer.once('result-unfollowing-dis', (event, data)=> {
+    homeAPI.unfollow(source, (data)=> {
       if (data.success) {
         dis.following = false
         dis.popularities = parseInt(dis.popularities) - 1
@@ -54,6 +52,7 @@ class DisSource extends React.Component {
   render() {
     let dis = this.props.dis, // this is summary
       title = dis.title,
+      image = dis.image || 'rabbit:///images/rss-icon.png',
       description = dis.description,
       popularities = dis.popularities || 0,
       feedsNum = dis.feedsNum,
@@ -61,7 +60,7 @@ class DisSource extends React.Component {
       following = dis.following
 
     return <div className="dis-source">
-      <img className="dis-image" src="https://www.google.com/s2/favicons?domain=javascriptweekly.com&alt=feed"/>
+      <img className="dis-image" src={image}/>
       <div className="content">
         <div className="top-badge">
           <div className="title">{title}</div>
@@ -70,12 +69,9 @@ class DisSource extends React.Component {
         <div className="description">
           {description}
         </div>
-        {/*
         <div className="popularities">
           {'popularity: ' + popularities}
         </div>
-        // TODO: support popularity
-        */}
         <div className="feedsNum">
           {'feedsNum: ' + feedsNum}
         </div>
@@ -93,10 +89,8 @@ DisSource.propTypes = {
 
 class SearchResultsDiv extends React.Component {
   render() {
-    let disSources = this.props.searchResults
+    const {disSources} = this.props.searchResults
     return <div className="feed-div">
-      {/*<div className="section-title">
-        DIS Sources</div>*/}
       {disSources.map((d) => <DisSource dis={d}/>)}
     </div>
   }

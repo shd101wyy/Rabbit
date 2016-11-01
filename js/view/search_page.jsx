@@ -1,6 +1,7 @@
 import React from 'react'
 
 import SearchResultsDiv from './search_results_div.jsx'
+import homeAPI from '../api/home_api.js'
 
 class SearchPage extends React.Component {
   constructor() {
@@ -34,6 +35,14 @@ class SearchPage extends React.Component {
         }
       })
       */
+     homeAPI.search(searchText, (data)=> {
+       console.log(data)
+       if (data.success && data.data) {
+         this.setState({status: '', showSearchResults: true, searchResults: data.data})
+       } else {
+         this.setState({status: 'No results found :(', showSearchResults: false})
+       }
+     })
     }
   }
 
