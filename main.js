@@ -1,5 +1,9 @@
 const {app, BrowserWindow, globalShortcut, ipcMain, protocol} = require('electron')
-const path = require('path')
+const path = require('path'),
+    request = require('request'),
+    notifier = require('node-notifier'),
+    {exec} = require('child_process')
+
 
 const user = require('./model/user.js')
 
@@ -54,6 +58,42 @@ function initProtocal() {
   })
 }
 
+function checkUpdate() {
+  function openFile(url) {
+    if (process.platform === 'win32')
+      cmd = 'explorer'
+    else if (process.platform === 'darwin')
+      cmd = 'open'
+    else
+      cmd = 'xdg-open'
+
+    exec(`${cmd} ${url}`)
+  }
+  // TODO: this url might be changed in the future.
+  request('https://raw.githubusercontent.com/shd101wyy/Rabbit/master/package.json', function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      const packageJSON = require('./package.json')
+
+      let onlinePackageJSON = JSON.parse(body)
+      console.log(onlinePackageJSON.version, packageJSON.version)
+      if (onlinePackageJSON.version > packageJSON.version) {
+        notifier.notify({
+          title: 'New version available!',
+          message: 'click me to visit the website',
+          wait: true,
+          icon: path.resolve(__dirname, './images/update.png'),
+          contentImage: void 0,
+          open: 'https://github.com/shd101wyy/Rabbit/releases', // doesn't work
+          sound: false
+        }, function() {
+          openFile('https://github.com/shd101wyy/Rabbit/releases')
+        })
+      }
+    } else {
+    }
+  })
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -61,6 +101,7 @@ app.on('ready', function() {
   user.initialize(function() {
     createWindow()
     initProtocal()
+    checkUpdate()
   })
 })
 

@@ -25,24 +25,15 @@ class SearchPage extends React.Component {
   handleSearchboxKeydown(e) {
     if (e.which === 13) {
       let searchText = this.state.searchboxValue
-      this.setState({status: 'Searching...', showSearchResults: false})
-      /*
-      feedAPI.search(searchText, (data) => {
-        if (data.success && data.data.length) {
-          this.setState({status: null, showSearchResults: true, searchResults: data.data})
-        } else {
-          this.setState({status: 'No results found :(', showSearchResults: false})
-        }
+      this.setState({status: 'Searching...', showSearchResults: false}, ()=> {
+        homeAPI.search(searchText, (data)=> {
+          if (data.success && data.data) {
+            this.setState({status: '', showSearchResults: true, searchResults: data.data})
+          } else {
+            this.setState({status: 'No results found :(', showSearchResults: false})
+          }
+        })
       })
-      */
-     homeAPI.search(searchText, (data)=> {
-       console.log(data)
-       if (data.success && data.data) {
-         this.setState({status: '', showSearchResults: true, searchResults: data.data})
-       } else {
-         this.setState({status: 'No results found :(', showSearchResults: false})
-       }
-     })
     }
   }
 
@@ -52,6 +43,7 @@ class SearchPage extends React.Component {
         <input className="search-box" type="text" placeholder="Search & Add source" value={this.state.searchboxValue} onChange={this.handleSearchboxChange} onKeyDown={this.handleSearchboxKeydown}/>
       </div>
       <div className="container">
+      {/* TODO: 分成三栏： source | feed | tag */}
       {
         this.state.showSearchResults ?
         <SearchResultsDiv searchResults={this.state.searchResults}></SearchResultsDiv> : null
