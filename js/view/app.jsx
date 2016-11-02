@@ -9,7 +9,6 @@ class App extends React.Component {
   componentDidMount() {
     ipcRenderer.send('check-auth')
     ipcRenderer.once('return-auth', function(event, data) {
-      console.log(data)
       if (!data.success) {
         browserHistory.push('/login')
       } else {
@@ -23,7 +22,7 @@ class App extends React.Component {
         })
       }
     })
-    browserHistory.push('/login')
+    browserHistory.push('/')
   }
   render() {
     return  <div>

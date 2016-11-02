@@ -52,8 +52,7 @@ class LoginSignup extends React.Component {
     console.log('signup: ', username, password, email)
     userAPI.signup(email, username, password, (res)=> {
       if (res.success) {
-        console.log(res)
-        ipcRenderer.send('save-user-info', {username, password})
+        ipcRenderer.send('save-user-info', {email, password})
         browserHistory.push('/')
       }
     })

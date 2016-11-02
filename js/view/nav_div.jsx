@@ -23,7 +23,7 @@ class NavDiv extends React.Component {
         <input className="search-box" type="text" placeholder="search & add source" />
       </div>*/}
       <img className="profile-pic" src="https://avatars3.githubusercontent.com/u/1908863?v=3&s=466" />
-      <div className={"section" + (page === 'FEED_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'FEED_PAGE')}>
+      <div className={"section" + (page === 'HOME_FEED_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'HOME_FEED_PAGE')}>
         <i className="icon fa fa-rss" aria-hidden="true"></i>
       </div>
       <div className={"section" + (page === 'SEARCH_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'SEARCH_PAGE')}>

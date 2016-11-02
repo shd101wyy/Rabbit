@@ -1,107 +1,10 @@
 import React from 'react'
 const Autolinker = require('autolinker')
 
+import Feed from './feed.jsx'
+
 import homeAPI from '../api/home_api.js'
-
 import utility from '../utility.js'
-
-let MSNRY = null
-
-class Feed extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      articleSummary: {}
-    }
-
-    this.showArticle = this.showArticle.bind(this)
-  }
-
-  componentDidMount() {
-    let feed = this.props.feed
-    if (feed.html) {
-      utility.getArticleSummary(feed.html, (articleSummary) => {
-        this.setState({articleSummary}, function() {
-          if (MSNRY) {
-            MSNRY.layout()
-          }
-        })
-      })
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let feed = nextProps.feed
-    if (this.props.feed === feed) { // same props
-      return
-    }
-    this.setState({articleSummary: {}})
-    if (feed.html) {
-      utility.getArticleSummary(feed.html, (articleSummary) => {
-        this.setState({articleSummary}, function() {
-          if (MSNRY) {
-            MSNRY.layout()
-          }
-        })
-      })
-    }
-  }
-
-  showArticle() {
-    this.props.showArticle(this.props.feed)
-  }
-
-  render() {
-    const feed = this.props.feed,
-      summaryText = this.state.articleSummary.text,
-      summaryImage = this.state.articleSummary.image,
-      summaryVideo = this.state.articleSummary.video
-
-    let mediaElement = null
-    if (summaryVideo) {
-      mediaElement = <div dangerouslySetInnerHTML={{
-        __html: summaryVideo
-      }} className="summary-video"></div>
-    } else if (summaryImage) {
-      /*
-      mediaElement = <div style={{
-        backgroundImage: `url(${summaryImage})`
-      }} className="summary-image"/>
-      */
-      mediaElement = <img src={summaryImage} className="summary-image"/>
-    }
-
-    return <div className="feed">
-      <div className="feed-header">
-        <img className="author-image" src={feed.image || 'https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-48.png'}/>
-        <div className="author">{feed.author || ''}</div>
-        <div className="date">{utility.formatDate(feed.updated)}</div>
-      </div>
-      <div className="content">
-        <div className="title">
-          <span>{feed.title.trim()}</span>
-          {feed.link
-            ? <a className="glyphicon glyphicon-link feed-link" href={feed.link} target="_blank"></a>
-            : null}
-        </div>
-        <div className="article-media">
-          {mediaElement}
-        </div>
-        <div className="article-summary">{summaryText || ''}</div>
-        <div className="message" dangerouslySetInnerHTML={{__html: utility.convertMessage(feed.text)}}></div>
-        <div className="show-article">
-          <a onClick={this.showArticle}>See Article</a>
-        </div>
-      </div>
-    </div>
-  }
-}
-
-// https://facebook.github.io/react/docs/reusable-components.html
-Feed.propTypes = {
-  feed: React.PropTypes.object.isRequired,
-  showArticle: React.PropTypes.func.isRequired,
-}
 
 class FeedDiv extends React.Component {
   constructor() {
@@ -112,7 +15,6 @@ class FeedDiv extends React.Component {
       status: '',
       dis: null
     }
-    this.showArticle = this.showArticle.bind(this)
     this.handleScroll = this.handleScroll.bind(this)
     this.getMoreFeeds = this.getMoreFeeds.bind(this)
   }
@@ -129,10 +31,6 @@ class FeedDiv extends React.Component {
   }
 
   componentDidUpdate() {
-  }
-
-  showArticle(feed) {
-    this.props.showArticle(feed)
   }
 
   handleScroll() {
@@ -165,6 +63,7 @@ class FeedDiv extends React.Component {
       }, (data) => {
         let dis = data.data
         if (!dis.feeds.length) { // no more feeds
+          console.log('no more feeds')
           return this.setState({
             loadingFeeds: false,
             noMoreFeeds: true,
@@ -208,12 +107,15 @@ class FeedDiv extends React.Component {
       </div>
     }
 
-    let status = this.props.status
+    const {status} = this.state,
+        {feeds} = dis
 
-    let feeds = dis.feeds
-    return <div className="feed-div masonry">
+    return <div className="feed-div">
       {feeds.map((feed, offset) => {
-        return <Feed feed={feed} showArticle={this.props.showArticle}></Feed>
+        if (dis.source === 'localhost') { // home feeds
+          return <Feed feed={feed} dis={feed.dis}></Feed>
+        }
+        return <Feed feed={feed} dis={dis}></Feed>
       })}
       <div className="status">
         {status}

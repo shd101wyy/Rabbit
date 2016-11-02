@@ -2,7 +2,7 @@ import React from 'react'
 
 import FeedDiv from './feed_div.jsx'
 
-class FeedPage extends React.Component {
+class HomeFeedPage extends React.Component {
   constructor() {
     super()
   }
@@ -11,7 +11,7 @@ class FeedPage extends React.Component {
     let subscriptions = this.props.subscriptions,
       dis = this.props.dis
 
-    return <div className="page feed-page">
+    return <div className="page home-feed-page">
       <div className="header">
         <div className="column-1-1">
           Home
@@ -22,8 +22,8 @@ class FeedPage extends React.Component {
   }
 }
 
-FeedPage.propTypes = {
+HomeFeedPage.propTypes = {
   source: React.PropTypes.string.isRequired,
 }
 
-export default FeedPage
+export default HomeFeedPage

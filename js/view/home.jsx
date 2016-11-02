@@ -10,7 +10,7 @@ import NavDiv from './nav_div.jsx'
 // import FeedDialog from './feed_dialog.jsx'
 // import ArticlePanel from './article_panel.jsx'
 import SearchPage from './search_page.jsx'
-import FeedPage from './feed_page.jsx'
+import HomeFeedPage from './home_feed_page.jsx'
 import SubscriptionsPage from './subscriptions_page.jsx'
 
 import homeAPI from '../api/home_api.js'
@@ -28,7 +28,7 @@ class Home extends React.Component {
       loadingFeeds: false,
       currentPage: 0, // 10 feeds per page
       noMoreFeeds: false,
-      page: 'SEARCH_PAGE' // SEARCH_PAGE | FEED_PAGE | NOTIFICATION_PAGE | SUBSCRIPTIONS_PAGE
+      page: 'SEARCH_PAGE' // SEARCH_PAGE | HOME_FEED_PAGE | NOTIFICATION_PAGE | SUBSCRIPTIONS_PAGE
     }
 
     this.showSearchResults = this.showSearchResults.bind(this)
@@ -42,24 +42,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    /*
-    homeAPI.getHomePageData((data) => {
-      console.log(data)
-      if (data.success) {
-        let subscriptions = data.data
-        subscriptions = [
-          {
-            source: 'localhost',
-            image: null,
-            title: 'all feeds'
-          }
-        ].concat(subscriptions)
-        this.setState({
-          subscriptions
-        })
-      }
-    })
-    */
   }
 
   componentWillUnmount() {
@@ -126,8 +108,8 @@ class Home extends React.Component {
       case 'SEARCH_PAGE':
         page = <SearchPage></SearchPage>
         break
-      case 'FEED_PAGE':
-        page = <FeedPage source={"localhost"}></FeedPage>
+      case 'HOME_FEED_PAGE':
+        page = <HomeFeedPage source={"localhost"}></HomeFeedPage>
         break
       case 'SUBSCRIPTIONS_PAGE':
         page = <SubscriptionsPage></SubscriptionsPage>

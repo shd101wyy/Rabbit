@@ -8,6 +8,7 @@ const { app } = require('electron'),
 
 class User {
   constructor() {
+    console.log(path.resolve(app.getPath('userData'), './newty_user_db'))
     this.db_User = new Datastore(path.resolve(app.getPath('userData'), './newty_user_db'))
     // this.db_DIS = new Datastore(path.resolve(app.getPath('userData'), './newty_dis_db'))
   }

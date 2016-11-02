@@ -21,23 +21,6 @@ const homeAPI = {
     })
   },
 
-  getHomePageData: function(callback) {
-    $.ajax(url.resolve(IP, '/get_home_page_data'), {
-      'type': 'GET',
-      dataType: 'json',
-      success: function(res) {
-        if (res && callback) {
-          callback(res)
-        } else if (callback) {
-          callback(null)
-        }
-      },
-      error: function(res) {
-        if (callback) callback(res || null)
-      }
-    })
-  },
-
   getSubscriptions: function(callback) {
     $.ajax(url.resolve(IP, '/get_subscriptions'), {
       'type': 'GET',
