@@ -465,6 +465,7 @@ body button,
 }
 .feed .article-media .summary-video:hover .play-icon {
   color: #000;
+  font-size: 58px;
 }
 .feed .article-summary {
   padding: 0 8px;

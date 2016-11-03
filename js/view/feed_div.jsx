@@ -45,6 +45,7 @@ class FeedDiv extends React.Component {
   }
 
   getMoreFeeds() {
+    this.elem.removeEventListener('scroll', this.handleScroll)
     const {source} = this.props
 
     const oldFeeds = (this.state.dis ? this.state.dis.feeds : []) || []
@@ -61,9 +62,10 @@ class FeedDiv extends React.Component {
         page: page,
         count: feedsPerPage
       }, (data) => {
+        this.elem.addEventListener('scroll', this.handleScroll)
+
         let dis = data.data
-        if (!dis.feeds.length) { // no more feeds
-          console.log('no more feeds')
+        if (dis.feeds.length < feedsPerPage) { // no more feeds // TODO: save page as state?
           return this.setState({
             loadingFeeds: false,
             noMoreFeeds: true,
