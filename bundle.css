@@ -365,14 +365,18 @@ body button,
   color: #555;
   margin-bottom: 12px;
 }
-.feed-div .dis-source .feedsNum,
 .feed-div .dis-source .popularities {
   font-size: 12px;
 }
 .feed-div .dis-source .follow-btn {
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 0;
+  top: 0;
+  padding: 6px;
+  color: #337ab7;
+  font-weight: 500;
+  font-size: 12px;
+  cursor: pointer;
 }
 .feed {
   transition: opacity 0.3s linear;

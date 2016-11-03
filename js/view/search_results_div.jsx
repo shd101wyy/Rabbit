@@ -55,7 +55,6 @@ class DisSource extends React.Component {
       image = dis.image || 'rabbit:///images/rss-icon.png',
       description = dis.description,
       popularities = dis.popularities || 0,
-      feedsNum = dis.feedsNum,
       updated = new Date(dis.updated),
       following = dis.following
 
@@ -72,12 +71,9 @@ class DisSource extends React.Component {
         <div className="popularities">
           {'popularity: ' + popularities}
         </div>
-        <div className="feedsNum">
-          {'feedsNum: ' + feedsNum}
-        </div>
         {following ?
-          <button type="button" className="btn btn-default follow-btn" onClick={this.clickUnfollowBtn}>unfollow</button> :
-          <button type="button" className="btn btn-default follow-btn" onClick={this.clickFollowBtn}>follow</button>
+          <div type="button" className="follow-btn" onClick={this.clickUnfollowBtn}>unfollow</div> :
+          <div type="button" className="follow-btn" onClick={this.clickFollowBtn}>follow</div>
         }
       </div>
     </div>
