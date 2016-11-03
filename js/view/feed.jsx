@@ -77,7 +77,7 @@ class Feed extends React.Component {
           <i className="fa fa-play-circle-o play-icon" aria-hidden="true"></i>
         </div>
       } else if (summaryImage) {
-        mediaElement = <img src={summaryImage} className="summary-image"/>
+        mediaElement = <div style={{backgroundImage: `url(${summaryImage})`}} className="summary-image"/>
       }
 
       return <div className="feed">
