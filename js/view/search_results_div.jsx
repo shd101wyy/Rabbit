@@ -2,8 +2,7 @@ import React from 'react'
 import {browserHistory} from 'react-router'
 const {ipcRenderer} = require('electron')
 
-// import Autolinker from 'autolinker'
-const Autolinker = require('autolinker')
+import Feed from './feed.jsx'
 
 import homeAPI from '../api/home_api.js'
 import utility from '../utility.js'
@@ -11,15 +10,8 @@ import utility from '../utility.js'
 class DisSource extends React.Component {
   constructor() {
     super()
-    this.convertMessage = this.convertMessage.bind(this)
     this.clickFollowBtn = this.clickFollowBtn.bind(this)
     this.clickUnfollowBtn = this.clickUnfollowBtn.bind(this)
-  }
-
-  convertMessage(text) {
-    return {
-      __html: Autolinker.link(text).replace(/\n/g, '<br>')
-    }
   }
 
   clickFollowBtn() {
@@ -85,9 +77,10 @@ DisSource.propTypes = {
 
 class SearchResultsDiv extends React.Component {
   render() {
-    const {disSources} = this.props.searchResults
+    const {diss, feeds} = this.props.searchResults
     return <div className="feed-div">
-      {disSources.map((d) => <DisSource dis={d}/>)}
+      {(diss || []).map((d) => <DisSource dis={d}/>)}
+      {(feeds || []).map((feed)=> <Feed dis={feed.dis} feed={feed}></Feed>)}
     </div>
   }
 }

@@ -19,6 +19,9 @@ class SearchPage extends React.Component {
   }
 
   handleSearchboxChange(e) {
+    if (!e.target.value) {
+      return this.setState({searchboxValue: '', searchResults: null, showSearchResults: false})
+    }
     this.setState({searchboxValue: e.target.value})
   }
 
