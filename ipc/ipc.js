@@ -1,19 +1,56 @@
-const {ipcMain} = require('electron'),
+const {ipcMain, BrowserWindow} = require('electron'),
   request = require('request'),
-  notifier = require('node-notifier')
+  notifier = require('node-notifier'),
+  path = require('path')
 
 const user = require('../model/user.js')
 
-ipcMain.on('check-auth', function(event, data) {
-  user.getUserInfo(function(error, data) {
-    if (error) {
-      return event.sender.send('return-auth', {success: false})
+
+let videoWin = null
+function createVideoWindow(callback) {
+  videoWin = new BrowserWindow({
+    width: 600,
+    height: 400,
+    transparent: false,
+    show: false,
+    // fullscreen: false
+    // titleBarStyle: 'hidden'
+  })
+
+  videoWin.loadURL(`file://${path.resolve(__dirname, '../html/video.html')}`)
+
+  videoWin.webContents.on('did-finish-load', callback)
+
+  videoWin.on('closed', ()=> {
+    videoWin = null
+  })
+}
+
+module.exports = function({mainWin}) {
+
+  ipcMain.on('check-auth', function(event, data) {
+    user.getUserInfo(function(error, data) {
+      if (error) {
+        return event.sender.send('return-auth', {success: false})
+      } else {
+        return event.sender.send('return-auth', {success: true, data})
+      }
+    })
+  })
+
+  ipcMain.on('save-user-info', function(event, data) {
+    user.saveUserInfo(data)
+  })
+
+  ipcMain.on('show-video-window', function(event, data) {
+    if (!videoWin) {
+      createVideoWindow(()=> {
+        videoWin.show()
+        videoWin.webContents.send('receive-video-request', data)
+      })
     } else {
-      return event.sender.send('return-auth', {success: true, data})
+      videoWin.show()
+      videoWin.webContents.send('receive-video-request', data)
     }
   })
-})
-
-ipcMain.on('save-user-info', function(event, data) {
-  user.saveUserInfo(data)
-})
+}

@@ -1,5 +1,7 @@
 import React from 'react'
 
+const {ipcRenderer} = require('electron')
+
 import homeAPI from '../api/home_api.js'
 import utility from '../utility.js'
 
@@ -41,6 +43,10 @@ class Feed extends React.Component {
     // TODO: to be implemented
   }
 
+  showVideo(src) {
+    ipcRenderer.send('show-video-window', src)
+  }
+
   render() {
     const dis = this.props.dis,
       feed = this.props.feed
@@ -60,9 +66,12 @@ class Feed extends React.Component {
 
       let mediaElement = null
       if (summaryVideo) {
-        mediaElement = <div dangerouslySetInnerHTML={{
-          __html: summaryVideo
-        }} className="summary-video"></div>
+        const videoSrc = summaryVideo.source,
+              poster = summaryVideo.poster
+
+        mediaElement = <div style={{backgroundImage: `url(${poster})`}} className="summary-video" onClick={this.showVideo.bind(this, videoSrc)}>
+          <i className="fa fa-play-circle-o play-icon" aria-hidden="true"></i>
+        </div>
       } else if (summaryImage) {
         mediaElement = <img src={summaryImage} className="summary-image"/>
       }

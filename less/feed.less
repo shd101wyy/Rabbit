@@ -60,9 +60,28 @@
       height: auto;
     }
 
-    video {
+    .summary-video {
+      position: relative;
       width: 100%;
-      height: auto;
+      padding-top: 62.5%;
+      background-size: cover;
+      background-color: #222;
+      cursor: pointer;
+
+      .play-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
+        color: #222;
+      }
+
+      &:hover {
+        .play-icon {
+          color: #000;
+        }
+      }
     }
   }
 

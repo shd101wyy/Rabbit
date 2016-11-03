@@ -38,11 +38,8 @@ function createWindow() {
     win = null
   })
 
-  globalShortcut.register('Cmd+R', () => { // TODO: relaunch app
-    app.relaunch({
-      args: process.argv.slice(1).concat(['--relaunch'])
-    })
-    app.exit(0)
+  require('./ipc/ipc.js')({
+    mainWin: win,
   })
 }
 
@@ -55,6 +52,15 @@ function initProtocal() {
   }, (error) => {
     if (error)
       console.error('Failed to register protocol')
+  })
+}
+
+function registerShortcuts() {
+  globalShortcut.register('Cmd+R', () => { // TODO: relaunch app
+    app.relaunch({
+      args: process.argv.slice(1).concat(['--relaunch'])
+    })
+    app.exit(0)
   })
 }
 
@@ -100,6 +106,7 @@ function checkUpdate() {
 app.on('ready', function() {
   user.initialize(function() {
     createWindow()
+    registerShortcuts()
     initProtocal()
     checkUpdate()
   })
@@ -124,5 +131,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-// require('./electron-app/ipc.js')
-require('./ipc/ipc.js')

@@ -92,7 +92,8 @@ const utility = {
     return text
   },
 
-  renderMarkdown(text, option = {}) {
+  renderMarkdown(text='', option = {}) {
+    if (!text) return ''
     const _unescape = option.unescape || false,
       videoControls = option.videoControls || false
 
@@ -124,13 +125,15 @@ const utility = {
     htmlString = validator.unescape(htmlString)
 
     let videoMatch = htmlString.match(/<video([\s\S]+?)<\/video>/g)
-    let video = null
+    let video = {}
     if (videoMatch && videoMatch.length) {
       let videoDiv = document.createElement('div')
       videoDiv.innerHTML = videoMatch[0]
-      video = videoDiv.children[0]
-      video.setAttribute('controls', true)
-      video.setAttribute('onloadstart', 'this.muted=false; this.volume=1.0')
+      let videoElement = videoDiv.children[0]
+
+      const source = videoElement.children[0].src, // videoElement.currentSrc,
+            poster = videoElement.getAttribute('poster')
+      video = {source, poster}
     }
 
 
@@ -165,7 +168,7 @@ const utility = {
       results = results.filter((r)=>r)
       callback({
         image: results[0],
-        video: (video ? video.outerHTML : null),
+        video: video,
         text: text
       })
     })

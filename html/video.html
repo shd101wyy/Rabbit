@@ -1,44 +1,45 @@
 <html>
 <head>
-  <title> Newty </title>
+  <title> Rabbit </title>
   <meta charset="utf-8">
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
   <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-
-  <!-- codemirror -->
-  <!-- <link href="css/codemirror.css"  rel="stylesheet"> -->
-
-  <!-- socket.io -->
-
-  <!-- font aweasome -->
-  <link rel="stylesheet" href="./lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../bundle.css">
+  <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-  <div id="root"></div>
+  <div class="video-window">
+    <video id="video" controls="true">
+    </video>
+  </div>
 </body>
 <!-- jQuery -->
 <script>
-window.$ = window.jQuery = window.jquery =  require('./lib/jquery-3.1.1.min.js')
+window.$ = window.jQuery = window.jquery =  require('../lib/jquery-3.1.1.min.js')
 </script>
 
-<!-- masonry -->
-<!-- <script src="./lib/masonry.min.js"></script> -->
+<!-- ipc -->
 <script>
-window.Masonry = require('masonry-layout')
+const {ipcRenderer} = require('electron')
+ipcRenderer.on('receive-video-request', function(event, data) {
+  console.log(data)
+  const video = document.getElementById('video')
+  video.pause()
+  video.innerHTML = ''
+
+  const source = document.createElement('source')
+  source.setAttribute('src', data)
+
+  video.appendChild(source)
+  video.load()
+  video.play()
+})
 </script>
 
-<!-- bundle -->
 <script>
-require('./bundle.js')
-</script>
-
-<script>
-
 const {remote} = require('electron')
 const {Menu, MenuItem} = remote
 
@@ -58,6 +59,5 @@ window.addEventListener('contextmenu', (e) => {
   rightClickPosition = {x: e.x, y: e.y}
   menu.popup(remote.getCurrentWindow())
 }, false)
-
 </script>
 </html>
