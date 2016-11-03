@@ -47,6 +47,10 @@ class Feed extends React.Component {
     ipcRenderer.send('show-video-window', src)
   }
 
+  openURL(url) {
+    ipcRenderer.send('open-url', url)
+  }
+
   render() {
     const dis = this.props.dis,
       feed = this.props.feed
@@ -86,7 +90,7 @@ class Feed extends React.Component {
           <div className="title">
             <span>{title}</span>
             {link
-              ? <a className="glyphicon glyphicon-link feed-link" href={link} target="_blank"></a>
+              ? <a className="glyphicon glyphicon-link feed-link" onClick={this.openURL.bind(this, link)}></a>
               : null}
           </div>
           <div className="article-media">

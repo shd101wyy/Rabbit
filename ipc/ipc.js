@@ -1,7 +1,8 @@
 const {ipcMain, BrowserWindow} = require('electron'),
   request = require('request'),
   notifier = require('node-notifier'),
-  path = require('path')
+  path = require('path'),
+  {exec} = require('child_process')
 
 const user = require('../model/user.js')
 
@@ -24,6 +25,17 @@ function createVideoWindow(callback) {
   videoWin.on('closed', ()=> {
     videoWin = null
   })
+}
+
+function openFile(url) {
+  if (process.platform === 'win32')
+    cmd = 'explorer'
+  else if (process.platform === 'darwin')
+    cmd = 'open'
+  else
+    cmd = 'xdg-open'
+
+  exec(`${cmd} ${url}`)
 }
 
 module.exports = function({mainWin}) {
@@ -52,5 +64,9 @@ module.exports = function({mainWin}) {
       videoWin.show()
       videoWin.webContents.send('receive-video-request', data)
     }
+  })
+
+  ipcMain.on('open-url', function(event, data) {
+    openFile(data)
   })
 }

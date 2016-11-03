@@ -427,6 +427,7 @@ body button,
 .feed .feed-link {
   margin-left: 6px;
   font-size: 11px;
+  cursor: pointer;
 }
 .feed .article-media {
   margin: 16px 0;

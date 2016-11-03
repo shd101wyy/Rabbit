@@ -125,7 +125,7 @@ const utility = {
     htmlString = validator.unescape(htmlString)
 
     let videoMatch = htmlString.match(/<video([\s\S]+?)<\/video>/g)
-    let video = {}
+    let video = null
     if (videoMatch && videoMatch.length) {
       let videoDiv = document.createElement('div')
       videoDiv.innerHTML = videoMatch[0]
