@@ -170,14 +170,21 @@ body button,
   width: 100%;
   height: 48px;
 }
-.page .header .column-1-1 {
+.page .column-1-1 {
   width: 100%;
   height: 100%;
   margin: 0;
   text-align: center;
 }
-.page .header .column-1-2 {
+.page .column-1-2 {
   width: 50%;
+  height: 100%;
+  margin: 0;
+  float: left;
+  text-align: center;
+}
+.page .column-1-3 {
+  width: 33.3333%;
   height: 100%;
   margin: 0;
   float: left;
@@ -326,7 +333,7 @@ body button,
 .article-panel .article-container .visit-website-btn {
   margin-top: 32px;
 }
-.feed-div .dis-source {
+.dis-source {
   margin: 0;
   position: relative;
   width: 100%;
@@ -339,36 +346,36 @@ body button,
   border: 1px solid #eee;
   z-index: 1;
 }
-.feed-div .dis-source .dis-image {
+.dis-source .dis-image {
   float: left;
   width: 48px;
   height: 48px;
   border-radius: 4px;
 }
-.feed-div .dis-source .content {
+.dis-source .content {
   margin-left: 48px;
   padding-left: 12px;
 }
-.feed-div .dis-source .top-badge {
+.dis-source .top-badge {
   font-size: 12px;
   margin-bottom: 4px;
 }
-.feed-div .dis-source .top-badge .title {
+.dis-source .top-badge .title {
   font-weight: 600;
   float: left;
   margin-right: 12px;
 }
-.feed-div .dis-source .top-badge .updated {
+.dis-source .top-badge .updated {
   color: #8899a6;
 }
-.feed-div .dis-source .description {
+.dis-source .description {
   color: #555;
   margin-bottom: 12px;
 }
-.feed-div .dis-source .popularities {
+.dis-source .popularities {
   font-size: 12px;
 }
-.feed-div .dis-source .follow-btn {
+.dis-source .follow-btn {
   position: absolute;
   right: 0;
   top: 0;
@@ -413,7 +420,7 @@ body button,
   width: 32px;
   height: 32px;
   margin-right: 12px;
-  border-radius: 4px;
+  border-radius: 16px;
 }
 .feed .feed-header .author {
   font-weight: 600;
@@ -649,6 +656,31 @@ body button,
   border-bottom: 1px solid #ccc;
   outline: none;
 }
+.search-page .header .search-box:focus {
+  background-color: #fafafa;
+}
+.search-page .trending-section {
+  width: 100%;
+}
+.search-page .trending-section .nav-button-group {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #eee;
+}
+.search-page .trending-section .nav-button-group .nav-btn {
+  cursor: pointer;
+  color: #666;
+  border-left: 1px solid #eee;
+}
+.search-page .trending-section .nav-button-group .nav-btn:first-child {
+  border-left: none;
+}
+.search-page .trending-section .nav-button-group .nav-btn:hover {
+  background-color: #eee;
+}
+.search-page .trending-section .nav-button-group .nav-btn.selected {
+  background-color: #f1f1f1;
+}
 .search-page .status {
   text-align: center;
   margin-top: 24px;
@@ -671,37 +703,6 @@ body button,
 }
 .home-feed-page .header .column-1-1:hover {
   cursor: pointer;
-}
-.home-feed-page .dis-list {
-  width: 200px;
-  height: 100%;
-  text-align: center;
-  overflow-y: auto;
-  background-color: #67718C;
-}
-.home-feed-page .dis-list::-webkit-scrollbar {
-  display: none;
-}
-.home-feed-page .dis-source {
-  padding: 4px;
-  margin-bottom: 2px;
-}
-.home-feed-page .dis-source.selected {
-  background-color: #838ba3;
-}
-.home-feed-page .dis-source:hover {
-  cursor: pointer;
-  background-color: #747e99;
-}
-.home-feed-page .dis-source .dis-source-image {
-  float: left;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-}
-.home-feed-page .dis-source .dis-title {
-  text-align: left;
-  color: #eee;
 }
 .subscriptions-page .header {
   background-color: #fff;
@@ -750,7 +751,7 @@ body button,
   height: 48px;
   float: left;
   margin-right: 24px;
-  border-radius: 4px;
+  border-radius: 24px;
 }
 .subscriptions-page .subscriptions-list .subscription-item .name {
   float: left;
@@ -774,4 +775,45 @@ body button,
 }
 .video-window:hover .close-btn {
   display: block;
+}
+.trending-div,
+.top-subscriptions-div {
+  overflow-y: auto;
+  height: 100%;
+  *zoom: 1;
+}
+.trending-div:after,
+.top-subscriptions-div:after,
+.trending-div:before,
+.top-subscriptions-div:before {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.trending-div:after,
+.top-subscriptions-div:after {
+  clear: both;
+}
+.trending-div .topic,
+.top-subscriptions-div .topic {
+  width: 100%;
+  height: 48px;
+  padding: 12px 32px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+.trending-div .topic:hover,
+.top-subscriptions-div .topic:hover {
+  background-color: #fcfcfc;
+}
+.tag {
+  float: left;
+  padding: 4px 6px;
+  background-color: #eff5ed;
+  border-radius: 6px;
+  color: #777;
+  cursor: pointer;
+}
+.tag:hover {
+  background-color: #e0e6de;
 }

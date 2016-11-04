@@ -9,6 +9,38 @@
       border: none;
       border-bottom: 1px solid #ccc;
       outline: none;
+
+      &:focus {
+        background-color: #fafafa;
+      }
+    }
+  }
+
+  .trending-section {
+    width: 100%;
+
+    .nav-button-group {
+      height: @page-header-height;
+      line-height: @page-header-height;
+      border-bottom: 1px solid #eee;
+
+      .nav-btn {
+        cursor: pointer;
+        color: #666;
+        border-left: 1px solid #eee;
+
+        &:first-child {
+          border-left: none;
+        }
+
+        &:hover {
+          background-color: #eee;
+        }
+
+        &.selected {
+          background-color: #f1f1f1;
+        }
+      }
     }
   }
 

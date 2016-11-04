@@ -1,6 +1,8 @@
 import React from 'react'
 
 import SearchResultsDiv from './search_results_div.jsx'
+import TrendingDiv from './trending_div.jsx'
+import TopSubscriptionsDiv from './top_subscriptions_div.jsx'
 import homeAPI from '../api/home_api.js'
 
 class SearchPage extends React.Component {
@@ -11,7 +13,8 @@ class SearchPage extends React.Component {
       searchboxValue: '',
       status: null,
       showSearchResults: false,
-      searchResults: null
+      searchResults: null,
+      selected: 0  // nav-btn
     }
 
     this.handleSearchboxChange = this.handleSearchboxChange.bind(this)
@@ -49,7 +52,22 @@ class SearchPage extends React.Component {
       {/* TODO: 分成三栏： source | feed | tag */}
       {
         this.state.showSearchResults ?
-        <SearchResultsDiv searchResults={this.state.searchResults}></SearchResultsDiv> : null
+        <SearchResultsDiv searchResults={this.state.searchResults}></SearchResultsDiv> :
+        <div className="trending-section">
+          <div className="nav-button-group">
+            <div className={"nav-btn column-1-3 " + (this.state.selected === 0 ? 'selected' : '')}
+                 onClick={()=> this.setState({selected: 0})}> Trending </div>
+            <div className={"nav-btn column-1-3 " + (this.state.selected === 1 ? 'selected' : '')}
+                 onClick={()=> this.setState({selected: 1})}> Top Feeds </div>
+            <div className={"nav-btn column-1-3 " + (this.state.selected === 2 ? 'selected' : '')}
+                 onClick={()=> this.setState({selected: 2})}> Top Subscriptions </div>
+          </div>
+          {
+            this.state.selected === 0 ? <TrendingDiv></TrendingDiv> : (
+            this.state.selected === 2 ? <TopSubscriptionsDiv></TopSubscriptionsDiv> : null
+            )
+          }
+        </div>
       }
         {this.state.status
           ? <div className="status">

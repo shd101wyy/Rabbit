@@ -19,42 +19,4 @@
       }
     }
   }
-
-  .dis-list {
-    width: @dist-list-width;
-    height: 100%;
-    text-align: center;
-    overflow-y: auto;
-    background-color: @dist-list-bg;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .dis-source {
-    padding: 4px;
-    margin-bottom: 2px;
-
-    &.selected {
-      background-color: contrast(@dist-list-bg, darken(@dist-list-bg, 10%), lighten(@dist-list-bg, 10%));
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: contrast(@dist-list-bg, darken(@dist-list-bg, 5%), lighten(@dist-list-bg, 5%));
-    }
-
-    .dis-source-image {
-      float: left;
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-    }
-
-    .dis-title {
-      text-align: left;
-      color: #eee;
-    }
-  }
 }

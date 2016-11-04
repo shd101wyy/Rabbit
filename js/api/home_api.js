@@ -115,6 +115,41 @@ const homeAPI = {
       }
     })
   },
+
+  getTrendingTopics({page=0, count=10}, callback) {
+    $.ajax(url.resolve(IP, `/get_trending_topics?page=${page}&count=${count}`), {
+      'type': 'GET',
+      dataType: 'json',
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  getTopSubscriptions({page=0, count=10}, callback) {
+    $.ajax(url.resolve(IP, `/get_top_subscriptions?page=${page}&count=${count}`), {
+      'type': 'GET',
+      dataType: 'json',
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  }
+
 }
 
 export default homeAPI
