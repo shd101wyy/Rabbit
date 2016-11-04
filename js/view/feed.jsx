@@ -81,24 +81,28 @@ class Feed extends React.Component {
       }
 
       return <div className="feed">
-        <div className="feed-header">
+        <div className="feed-sidebar">
           <img className="author-image" src={disImage}/>
-          <div className="author">{disTitle}</div>
-          <div className="date">{utility.formatDate(feed.updated)}</div>
         </div>
-        <div className="content">
-          <div className="title">
-            <span>{title}</span>
-            {link
-              ? <a className="glyphicon glyphicon-link feed-link" onClick={this.openURL.bind(this, link)}></a>
-              : null}
+        <div className="feed-container"> 
+          <div className="feed-header">
+            <div className="author">{disTitle}</div>
+            <div className="date">{utility.formatDate(feed.updated)}</div>
           </div>
-          <div className="article-media">
-            {mediaElement}
-          </div>
-          <div className="article-summary">{summaryText || ''}</div>
-          <div className="show-article">
-            <a onClick={this.showArticle}>See Article</a>
+          <div className="content">
+            <div className="title">
+              <span>{title}</span>
+              {link
+                ? <a className="glyphicon glyphicon-link feed-link" onClick={this.openURL.bind(this, link)}></a>
+                : null}
+            </div>
+            <div className="article-media">
+              {mediaElement}
+            </div>
+            <div className="article-summary">{summaryText || ''}</div>
+            <div className="show-article">
+              <a onClick={this.showArticle}>See Article</a>
+            </div>
           </div>
         </div>
       </div>

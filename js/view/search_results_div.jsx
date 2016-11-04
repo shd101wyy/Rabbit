@@ -10,8 +10,9 @@ import utility from '../utility.js'
 
 class SearchResultsDiv extends React.Component {
   render() {
-    const {diss, feeds} = this.props.searchResults
+    const {diss, feeds, newDIS} = this.props.searchResults
     return <div className="feed-div">
+      {newDIS ? <DisSource dis={newDIS}/> : null}
       {(diss || []).map((d) => <DisSource dis={d}/>)}
       {(feeds || []).map((feed)=> <Feed dis={feed.dis} feed={feed}></Feed>)}
     </div>

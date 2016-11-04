@@ -2,12 +2,9 @@ const url = require('url')
 
 const homeAPI = {
   search: function(searchText, callback) {
-    $.ajax(url.resolve(IP, '/search'), {
-      'type': 'POST',
+    $.ajax(url.resolve(IP, `/search?q=${encodeURI(searchText)}`), {
+      'type': 'GET',
       dataType: 'json',
-      data: {
-        searchText
-      },
       success: function(res) {
         if (res && callback) {
           callback(res)
