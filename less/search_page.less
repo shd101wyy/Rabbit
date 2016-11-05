@@ -2,8 +2,26 @@
 
 .search-page {
   .header {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    
+    @search-status-width: 64px;
+    .search-status {
+      width: @search-status-width;
+      padding: 12px 6px;
+      float: left;
+      height: 100%;
+      font-size: 16px;
+      background-color: rgba(85, 87, 125, 0.95);
+      color: #fff;
+      font-weight: 200;
+      border-radius: 0 2px 2px 0;
+      text-align: center;
+    }
+
     .search-box {
-      width: 100%;
+      float: left;
+      width: calc(~"100% - "@search-status-width);
       height: 100%;
       padding: 4px 16px;
       border: none;

@@ -14,7 +14,8 @@ class SearchPage extends React.Component {
       status: null,
       showSearchResults: false,
       searchResults: null,
-      selected: 0  // nav-btn
+      selected: 0,  // nav-btn
+      searchType: 'general'
     }
 
     this.handleSearchboxChange = this.handleSearchboxChange.bind(this)
@@ -23,9 +24,13 @@ class SearchPage extends React.Component {
 
   handleSearchboxChange(e) {
     if (!e.target.value) {
-      return this.setState({searchboxValue: '', searchResults: null, showSearchResults: false})
+      return this.setState({searchboxValue: '', searchResults: null, showSearchResults: false, searchType: 'general'})
     }
-    this.setState({searchboxValue: e.target.value})
+    const value = e.target.value.trim()
+    let searchType = 'general'
+    if (value[0] === '#')
+      searchType = 'topic'
+    this.setState({searchboxValue: e.target.value, searchType})
   }
 
   handleSearchboxKeydown(e) {
@@ -46,6 +51,7 @@ class SearchPage extends React.Component {
   render() {
     return <div className="page search-page">
       <div className="header">
+        <div className="search-status">{this.state.searchType}</div>
         <input className="search-box" type="text" placeholder="Search & Add source" value={this.state.searchboxValue} onChange={this.handleSearchboxChange} onKeyDown={this.handleSearchboxKeydown}/>
       </div>
       <div className="container">

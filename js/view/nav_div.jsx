@@ -1,5 +1,6 @@
 import React from 'react'
 import {browserHistory} from 'react-router'
+const {ipcRenderer} = require('electron')
 
 class NavDiv extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ class NavDiv extends React.Component {
   clickSection(name) {
     console.log('click section')
     browserHistory.push('/rabbit/' + name.toLowerCase())
+    ipcRenderer.send('clear-history')
     this.setState({page: name})
   }
 

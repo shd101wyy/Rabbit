@@ -86,4 +86,8 @@ module.exports = function({mainWin}) {
     event.sender.send('history-go-back', data)
   })
 
+  ipcMain.on('clear-history', function(event, data) {
+    event.sender.send('clear-history')
+  })
+
 }

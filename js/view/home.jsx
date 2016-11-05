@@ -53,6 +53,10 @@ class Home extends React.Component {
       history.pop()
       this.setState({history})
     })
+
+    ipcRenderer.on('clear-history', (event, data)=> {
+      this.setState({history: []})
+    })
   }
 
   componentWillUnmount() {
