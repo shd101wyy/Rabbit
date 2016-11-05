@@ -210,30 +210,13 @@ body button,
   overflow: auto;
   -webkit-user-select: none;
   -webkit-app-region: drag;
-  /*
-  .search-box-div {
-    width: 100%;
-    margin-top: 12px;
-    margin-bottom: 12px;
-
-    input {
-      width: 100%;
-      padding: 4px 6px;
-      border-radius: 4px;
-      outline: none;
-      border: none;
-      color: #444;
-      font-size: 12px;
-    }
-  }
-  */
 }
 .nav-div .profile-pic {
   width: 52px;
   height: 52px;
   margin-top: 48px;
   margin-bottom: 24px;
-  border-radius: 6px;
+  border-radius: 26px;
 }
 .nav-div .section {
   margin-bottom: 20px;
@@ -869,4 +852,78 @@ body button,
   font-size: 24px;
   font-weight: 300;
   text-align: center;
+}
+.feed-page {
+  position: relative;
+}
+.feed-page .header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(63, 64, 85, 0.25);
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+.feed-page .header .column-1-1 {
+  padding: 12px;
+  font-size: 16px;
+}
+.feed-page .header .column-1-1:hover {
+  cursor: pointer;
+}
+.feed-page .back-btn {
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+.feed-page .back-btn:hover {
+  font-size: 20px;
+}
+.feed-page .status {
+  margin-top: 24px;
+  margin-bottom: 48px;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+}
+.feed-page .feed-page-div {
+  width: 100%;
+  height: calc(100% -  48px);
+  position: relative;
+  padding: 16px;
+  overflow-y: auto;
+  *zoom: 1;
+}
+.feed-page .feed-page-div:after,
+.feed-page .feed-page-div:before {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.feed-page .feed-page-div:after {
+  clear: both;
+}
+.feed-page .feed-page-div .title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 16px 0;
+}
+.feed-page .feed-page-div img {
+  max-width: 100% !important;
+  margin: 12px 0;
+}
+.feed-page .feed-page-div .link-btn {
+  width: 100%;
+  text-align: center;
+  padding: 6px;
+  border-radius: 6px;
+  border: 2px solid #c7def5;
+  color: #8db5de;
+  cursor: pointer;
+}
+.feed-page .feed-page-div .link-btn:hover {
+  color: #3e82c7;
+  border: 2px dotted #2f68a3;
 }

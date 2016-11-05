@@ -81,7 +81,7 @@ class FeedDiv extends React.Component {
         newFeeds.sort((a, b) => b.updated.getTime() - a.updated.getTime())
 
         for (let i = 0; i < newFeeds.length; i++) { // remove duplicate
-          if (i < newFeeds.length - 1 && newFeeds[i].id === newFeeds[i + 1].id) {
+          if (i < newFeeds.length - 1 && newFeeds[i]._id === newFeeds[i + 1]._id) {
             newFeeds.splice(i + 1, 1)
             i -= 1
           }

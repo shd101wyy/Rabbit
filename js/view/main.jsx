@@ -18,7 +18,8 @@ import NotFound from './not_found.jsx'
 import SearchPage from './search_page.jsx'
 import HomeFeedPage from './home_feed_page.jsx'
 import SubscriptionsPage from './subscriptions_page.jsx'
-import DISPage from './DISPage.jsx'
+import DISPage from './dis_page.jsx'
+import FeedPage from './feed_page.jsx'
 
 // check
 // https://github.com/ReactTraining/react-router/blob/master/examples
@@ -30,6 +31,7 @@ ReactDOM.render(
       <Route path="/rabbit/search_page" component={SearchPage} />
       <Route path="/rabbit/subscriptions_page" component={SubscriptionsPage} />
       <Route path="/dis/:source" component={DISPage}/>
+      <Route path="/feed/:feedObjectId" component={FeedPage}/>
       {/*<Route path="/home_feed_page" component={} />*/}
     </Route>
     <Route path="/login" component={LoginSignup} />

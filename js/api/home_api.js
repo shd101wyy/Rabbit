@@ -41,7 +41,7 @@ const homeAPI = {
       'type': 'POST',
       dataType: 'json',
       data: {
-        source
+        source: encodeURIComponent(source)
       },
       success: function(res) {
         if (res && callback) {
@@ -61,7 +61,7 @@ const homeAPI = {
       'type': 'POST',
       dataType: 'json',
       data: {
-        source
+        source: encodeURIComponent(source)
       },
       success: function(res) {
         if (res && callback) {
@@ -100,6 +100,23 @@ const homeAPI = {
       data: {
         feedData: JSON.stringify(feedData)
       },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  getFeed(feedObjectId, callback) {
+    $.ajax(url.resolve(IP, `/get_feed?feedObjectId=${feedObjectId}`), {
+      'type': 'GET',
+      dataType: 'json',
       success: function(res) {
         if (res && callback) {
           callback(res)

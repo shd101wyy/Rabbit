@@ -43,6 +43,8 @@ class Feed extends React.Component {
 
   showArticle() {
     // TODO: to be implemented
+    const {_id} = this.props.feed
+    browserHistory.push('/feed/' + encodeURIComponent(_id))
   }
 
   showVideo(src) {
