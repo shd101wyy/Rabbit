@@ -1,4 +1,4 @@
-const {ipcMain, BrowserWindow} = require('electron'),
+const {ipcMain, BrowserWindow, shell} = require('electron'),
   request = require('request'),
   notifier = require('node-notifier'),
   path = require('path'),
@@ -35,7 +35,7 @@ function openFile(url) {
   else
     cmd = 'xdg-open'
 
-  exec(`${cmd} ${url}`)
+  shell.openExternal(url)
 }
 
 module.exports = function({mainWin}) {
