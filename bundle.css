@@ -264,6 +264,10 @@ body button,
   box-sizing: border-box;
   border-radius: 2px;
   border: 1px solid #eee;
+  cursor: pointer;
+}
+.dis-source:hover {
+  background-color: #fafafa;
 }
 .dis-source .dis-image {
   float: left;
@@ -818,6 +822,30 @@ body button,
   position: absolute;
   transform: translatey(-50%);
   border: 4px solid #ffffff;
+}
+.dis-page .profile .profile-container .follow-btn {
+  position: absolute;
+  right: 12px;
+  color: #3a67b0;
+  padding: 4px 6px;
+  border-radius: 4px;
+  width: 80px;
+  text-align: center;
+  border: 1px solid #96caea;
+  cursor: pointer;
+}
+.dis-page .profile .profile-container .follow-btn:hover {
+  background-color: #f1f1f1;
+}
+.dis-page .profile .profile-container .follow-btn.following::after {
+  content: 'following';
+}
+.dis-page .profile .profile-container .follow-btn.following:hover {
+  color: #b03a8c;
+  border: 1px solid #ea96d0;
+}
+.dis-page .profile .profile-container .follow-btn.following:hover::after {
+  content: 'unfollow ?';
 }
 .dis-page .profile .profile-container .title {
   position: relative;

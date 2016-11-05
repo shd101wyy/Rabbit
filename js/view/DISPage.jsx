@@ -9,8 +9,11 @@ class DISPage extends React.Component {
   constructor() {
     super()
     this.state = {
-      dis: null
+      dis: null,
+      following: undefined
     }
+    this.clickFollowBtn = this.clickFollowBtn.bind(this)
+    this.clickUnfollowBtn = this.clickUnfollowBtn.bind(this)
   }
 
   componentDidMount() {
@@ -23,11 +26,36 @@ class DISPage extends React.Component {
       }
       this.setState({dis: data.data})
     })
+
+    homeAPI.checkFollowing(source, (data)=> {
+      console.log(data)
+      this.setState({following: data.data})
+    })
+  }
+
+  clickFollowBtn() {
+    const source = decodeURIComponent(this.props.params.source)
+
+    homeAPI.follow(source, (data)=> {
+      if (data.success) {
+        this.setState({following: true})
+      }
+    })
+  }
+
+  clickUnfollowBtn() {
+    const source = decodeURIComponent(this.props.params.source)
+
+    homeAPI.unfollow(source, (data)=> {
+      if (data.success) {
+        this.setState({following: false})
+      }
+    })
   }
 
   render() {
     const source = decodeURIComponent(this.props.params.source)
-      if (!this.state.dis) {
+      if (!this.state.dis || this.state.following === undefined) {
         return <div className="page dis-page">
           <div className="status">loading page...</div>
         </div>
@@ -54,6 +82,11 @@ class DISPage extends React.Component {
             <div className="author-image" style={{
               backgroundImage: `url(${image})`
             }}></div>
+            {
+              this.state.following ?
+            <div className="follow-btn following" onClick={this.clickUnfollowBtn}></div> :
+            <div className="follow-btn" onClick={this.clickFollowBtn}>follow</div>
+            }
             <div className="title">{title}</div>
             <div className="description">{description}</div>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
 const {ipcRenderer} = require('electron')
 
 import homeAPI from '../api/home_api.js'
@@ -7,40 +8,11 @@ import utility from '../utility.js'
 class DisSource extends React.Component {
   constructor() {
     super()
-    // this.clickFollowBtn = this.clickFollowBtn.bind(this)
-    // this.clickUnfollowBtn = this.clickUnfollowBtn.bind(this)
   }
-  /*
-  clickFollowBtn() {
-    // TODO: unfollow
-    let dis = this.props.dis,
-      source = dis.source
-
-    homeAPI.follow(source, (data)=> {
-      if (data.success) {
-        dis.following = true
-        dis.popularities = (parseInt(dis.popularities) + 1) || 1
-        this.forceUpdate()
-      }
-    })
-  }
-
-  clickUnfollowBtn() {
-    let dis = this.props.dis,
-      source = dis.source
-
-    homeAPI.unfollow(source, (data)=> {
-      if (data.success) {
-        dis.following = false
-        dis.popularities = parseInt(dis.popularities) - 1
-        this.forceUpdate()
-      }
-    })
-  }
-  */
 
   render() {
     let dis = this.props.dis, // this is summary
+      source = dis.source,
       title = dis.title,
       image = dis.image || 'rabbit:///images/rss-icon.png',
       description = dis.description,
@@ -48,7 +20,7 @@ class DisSource extends React.Component {
       updated = new Date(dis.updated)
       // following = dis.following
 
-    return <div className="dis-source">
+    return <div className="dis-source" onClick={()=> browserHistory.push('/dis/'+encodeURIComponent(source))}>
       <img className="dis-image" src={image}/>
       <div className="content">
         <div className="top-badge">

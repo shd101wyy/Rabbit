@@ -130,6 +130,26 @@ const homeAPI = {
     })
   },
 
+  checkFollowing(source, callback) {
+    $.ajax(url.resolve(IP, '/check_following_source'), {
+      'type': 'POST',
+      dataType: 'json',
+      data: {
+        source: encodeURIComponent(source)
+      },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
   getTrendingTopics({page=0, count=10}, callback) {
     $.ajax(url.resolve(IP, `/get_trending_topics?page=${page}&count=${count}`), {
       'type': 'GET',

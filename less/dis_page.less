@@ -48,6 +48,37 @@
         border: 4px solid rgb(255, 255, 255);
       }
 
+      .follow-btn {
+        position: absolute;
+        right: 12px;
+        color: #3a67b0;
+        padding: 4px 6px;
+        border-radius: 4px;
+        width: 80px;
+        text-align: center;
+        border: 1px solid #96caea;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f1f1f1;
+        }
+
+        &.following {
+          &::after {
+            content: 'following'
+          }
+
+          &:hover {
+            &::after {
+              content: 'unfollow ?';
+            }
+
+            color: #b03a8c;
+            border: 1px solid #ea96d0;
+          }
+        }
+      }
+
       .title {
         position: relative;
         font-weight: 800;
