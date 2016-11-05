@@ -176,7 +176,9 @@ body button,
   color: #EF3B3A;
 }
 .page {
-  margin-left: 78px;
+  position: absolute;
+  top: 0;
+  left: 78px;
   width: calc(100% -  78px);
   height: 100%;
   background-color: #fff;
@@ -978,4 +980,33 @@ body button,
 .feed-page .feed-page-div .link-btn:hover {
   color: #3e82c7;
   border: 2px dotted #2f68a3;
+}
+.topic-page {
+  z-index: 2;
+  overflow-y: auto;
+  padding: 0;
+}
+.topic-page .back-btn {
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+.topic-page .back-btn:hover {
+  font-size: 20px;
+}
+.topic-page .header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(63, 64, 85, 0.25);
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+.topic-page .header .column-1-1 {
+  padding: 12px;
+  font-size: 16px;
+}
+.topic-page .header .column-1-1:hover {
+  cursor: pointer;
 }

@@ -1,4 +1,6 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
+const {ipcRenderer} = require('electron')
 
 import homeAPI from '../api/home_api.js'
 
@@ -24,6 +26,10 @@ class TrendingDiv extends React.Component {
     }
   }
 
+  clickTag(tag) {
+    ipcRenderer.send('show-topic', tag)
+  }
+
   componentDidMount() {
     homeAPI.getTrendingTopics({page: 0, count: 20}, (data)=> {
       if (data.success) {
@@ -35,7 +41,7 @@ class TrendingDiv extends React.Component {
   render() {
     return <div className="trending-div">
       {this.state.topics.map((topic)=> {
-        return <div className="topic"><Tag name={topic.name}></Tag></div>
+        return <div className="topic" onClick={this.clickTag.bind(this, topic.name)}><Tag name={topic.name}></Tag></div>
       })}
     </div>
   }

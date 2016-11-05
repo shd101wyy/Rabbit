@@ -69,4 +69,13 @@ module.exports = function({mainWin}) {
   ipcMain.on('open-url', function(event, data) {
     openFile(data)
   })
+
+  ipcMain.on('show-topic', function(event, data) {
+    event.sender.send('show-topic', data)
+  })
+
+  ipcMain.on('history-go-back', function(event, data) {
+    event.sender.send('history-go-back', data)
+  })
+
 }

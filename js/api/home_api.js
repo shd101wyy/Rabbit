@@ -76,7 +76,7 @@ const homeAPI = {
     })
   },
 
-  getFeeds: function({source, page=0, count=10}, callback) {
+  getFeeds({source, page=0, count=10}, callback) {
     $.ajax(url.resolve(IP, `/get_feeds?source=${encodeURIComponent(source)}&page=${page}&count=${count}`), {
       'type': 'GET',
       dataType: 'json',
@@ -93,7 +93,24 @@ const homeAPI = {
     })
   },
 
-  postFeed: function(feedData, callback) {
+  getTopicFeeds({topic, page=0, count=10}, callback) {
+    $.ajax(url.resolve(IP, `/get_topic_feeds?topic=${encodeURIComponent(topic)}&page=${page}&count=${count}`), {
+      'type': 'GET',
+      dataType: 'json',
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  postFeed(feedData, callback) {
     $.ajax(url.resolve(IP, '/post_feed'), {
       'type': 'POST',
       dataType: 'json',

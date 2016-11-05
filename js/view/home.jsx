@@ -7,6 +7,7 @@ const {ipcRenderer} = require('electron')
 // import FeedDiv from './feed_div.jsx'
 // import SearchResultsDiv from './search_results_div.jsx'
 import NavDiv from './nav_div.jsx'
+import TopicPage from './topic_page.jsx'
 
 import homeAPI from '../api/home_api.js'
 
@@ -14,44 +15,32 @@ class Home extends React.Component {
   constructor() {
     super()
     this.state = {
-      showSearchResults: false,
       showFeedDialog: false,
-      showArticlePanel: false,
-      searchResults: null,
-      subscriptions: [],
-      feed: null, // current viewing feed
-      loadingFeeds: false,
-      currentPage: 0, // 10 feeds per page
-      noMoreFeeds: false,
-      // page: 'SEARCH_PAGE' // SEARCH_PAGE | HOME_FEED_PAGE | NOTIFICATION_PAGE | SUBSCRIPTIONS_PAGE
+      history: []
     }
 
-    this.showSearchResults = this.showSearchResults.bind(this)
-    this.hideSearchResults = this.hideSearchResults.bind(this)
     this.hideFeedDialog = this.hideFeedDialog.bind(this)
     this.composeNewFeed = this.composeNewFeed.bind(this)
     this.postFeed = this.postFeed.bind(this)
-    this.showArticle = this.showArticle.bind(this)
-    this.hideArticle = this.hideArticle.bind(this)
   }
 
   componentDidMount() {
+    ipcRenderer.on('show-topic', (event, data)=> {
+      console.log(data)
+      const topicPage =  <TopicPage tag={data}></TopicPage>
+      const {history} = this.state
+      history.push(topicPage)
+      this.setState({history})
+    })
+
+    ipcRenderer.on('history-go-back', (event, data)=> {
+      const {history} = this.state
+      history.pop()
+      this.setState({history})
+    })
   }
 
   componentWillUnmount() {
-  }
-
-  showSearchResults(data) {
-    console.log(data)
-    if (data && data.success) {
-      this.setState({showSearchResults: true, searchResults: data.data})
-    }
-  }
-
-  hideSearchResults() {
-    if (this.state.showSearchResults) {
-      this.setState({showSearchResults: false})
-    }
   }
 
   hideFeedDialog() {
@@ -79,23 +68,12 @@ class Home extends React.Component {
     })
   }
 
-  showArticle(feed) {
-    this.setState({showArticlePanel: true, feed})
-  }
-
-  hideArticle(feed) {
-    this.setState({showArticlePanel: false, feed: null})
-  }
-
   render() {
-    let className = 'home'
-    if (this.state.showArticlePanel) {
-      className += ' no-scroll'
-    }
-
-    return <div className={className} ref="home-dom">
+    const {history} = this.state
+    return <div className="home">
       <NavDiv></NavDiv>
       {this.props.children}
+      {history.length ? history[history.length-1] : null }
     </div>
   }
 }

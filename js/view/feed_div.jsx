@@ -46,57 +46,67 @@ class FeedDiv extends React.Component {
 
   getMoreFeeds() {
     this.elem.removeEventListener('scroll', this.handleScroll)
-    const {source} = this.props
+    const {source, topic} = this.props
 
     const oldFeeds = (this.state.dis ? this.state.dis.feeds : []) || []
     const feedsCount = oldFeeds.length || 0,
         feedsPerPage = 10,
         page = Math.floor(feedsCount / feedsPerPage)
 
+    let callback = (data) => {
+      this.elem.addEventListener('scroll', this.handleScroll)
+
+      let dis = data.data
+      let length = dis.feeds.length
+      if (!length) { // no more feeds // TODO: save page as state?
+        return this.setState({
+          loadingFeeds: false,
+          noMoreFeeds: true,
+          status: 'no more feeds :('
+        })
+      }
+      dis.updated = new Date(dis.updated)
+      dis.feeds.forEach((d) => { // convert updated to Date
+        d.updated = new Date(d.updated)
+      })
+
+      let newFeeds = oldFeeds.concat(dis.feeds) // TODO: remove duplicate
+      newFeeds.sort((a, b) => b.updated.getTime() - a.updated.getTime())
+
+      for (let i = 0; i < newFeeds.length; i++) { // remove duplicate
+        if (i < newFeeds.length - 1 && newFeeds[i]._id === newFeeds[i + 1]._id) {
+          newFeeds.splice(i + 1, 1)
+          i -= 1
+        }
+      }
+
+      dis.feeds = newFeeds
+
+      this.setState({
+        loadingFeeds: false,
+        noMoreFeeds: (length < feedsPerPage), // false,
+        status: (length < feedsPerPage ? 'no more feeds :(' : ''),
+        dis: dis
+      })
+    }
+
     this.setState({
       loadingFeeds: true,
       status: 'loading feeds...'
     }, () => {
-      homeAPI.getFeeds({
-        source,
-        page: page,
-        count: feedsPerPage
-      }, (data) => {
-        this.elem.addEventListener('scroll', this.handleScroll)
-
-        let dis = data.data
-        let length = dis.feeds.length
-        if (!length) { // no more feeds // TODO: save page as state?
-          return this.setState({
-            loadingFeeds: false,
-            noMoreFeeds: true,
-            status: 'no more feeds :('
-          })
-        }
-        dis.updated = new Date(dis.updated)
-        dis.feeds.forEach((d) => { // convert updated to Date
-          d.updated = new Date(d.updated)
-        })
-
-        let newFeeds = oldFeeds.concat(dis.feeds) // TODO: remove duplicate
-        newFeeds.sort((a, b) => b.updated.getTime() - a.updated.getTime())
-
-        for (let i = 0; i < newFeeds.length; i++) { // remove duplicate
-          if (i < newFeeds.length - 1 && newFeeds[i]._id === newFeeds[i + 1]._id) {
-            newFeeds.splice(i + 1, 1)
-            i -= 1
-          }
-        }
-
-        dis.feeds = newFeeds
-
-        this.setState({
-          loadingFeeds: false,
-          noMoreFeeds: (length < feedsPerPage), // false,
-          status: (length < feedsPerPage ? 'no more feeds :(' : ''),
-          dis: dis
-        })
-      })
+      if (source) {
+        homeAPI.getFeeds({
+          source,
+          page: page,
+          count: feedsPerPage
+        }, callback)
+      } else if (topic) {
+        homeAPI.getTopicFeeds({
+          topic,
+          page: page,
+          count: feedsPerPage
+        }, callback)
+      }
     })
   }
 
@@ -117,7 +127,7 @@ class FeedDiv extends React.Component {
     return <div className="feed-div">
       {this.props.profile}
       {feeds.map((feed, offset) => {
-        if (dis.source === 'localhost') { // home feeds
+        if (dis.source === 'localhost' || dis.source === 'topic') { // home feeds & topic feeds
           return <Feed feed={feed} dis={feed.dis}></Feed>
         }
         return <Feed feed={feed} dis={dis}></Feed>
@@ -130,7 +140,7 @@ class FeedDiv extends React.Component {
 }
 
 FeedDiv.propTypes = {
-  source: React.PropTypes.string.isRequired,
+  // source: React.PropTypes.string.isRequired,
 }
 
 export default FeedDiv

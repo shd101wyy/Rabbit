@@ -15,6 +15,7 @@ class NavDiv extends React.Component {
   }
 
   clickSection(name) {
+    console.log('click section')
     browserHistory.push('/rabbit/' + name.toLowerCase())
     this.setState({page: name})
   }
@@ -25,9 +26,6 @@ class NavDiv extends React.Component {
     const {page} = this.state
 
     return <div className="nav-div">
-      {/*<div className="search-box-div">
-        <input className="search-box" type="text" placeholder="search & add source" />
-      </div>*/}
       <img className="profile-pic" src="https://avatars3.githubusercontent.com/u/1908863?v=3&s=466" />
       <div className={"section" + (page === 'HOME_FEED_PAGE' ? ' selected' : '')} onClick={this.clickSection.bind(this, 'HOME_FEED_PAGE')}>
         <i className="icon fa fa-rss" aria-hidden="true"></i>

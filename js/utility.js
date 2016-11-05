@@ -223,6 +223,10 @@ const utility = {
         ipcRenderer.send('open-url', a.href)
       }
     }
+  },
+
+  historyGoBack() {
+    ipcRenderer.send('history-go-back')
   }
 }
 
