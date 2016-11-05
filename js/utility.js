@@ -175,7 +175,8 @@ const utility = {
     })
   },
 
-  linkVideos(elem) {
+  formatHTMLElement(elem) {
+    // videos
     const videos = elem.getElementsByTagName('video')
     for (let i = 0; i < videos.length; i++) {
       const video = videos[i]
@@ -190,8 +191,21 @@ const utility = {
       }
 
       wrapper.innerHTML = `<i class="fa fa-play-circle-o play-icon" aria-hidden="true"></i>`
-
       video.parentElement.replaceChild(wrapper, video)
+    }
+
+    // images
+    const images = elem.getElementsByTagName('img')
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i]
+      image.onload = function() {
+        if (image.width >= 200) {
+          image.style.width = '100%'
+        }
+      }
+      if (image.width >= 200) {
+        image.style.width = '100%'
+      }
     }
   }
 }

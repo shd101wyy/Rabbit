@@ -27,7 +27,7 @@ class FeedPage extends React.Component {
 
   componentDidUpdate() {
     const contentElement = this.refs.content
-    utility.linkVideos(contentElement)
+    utility.formatHTMLElement(contentElement)
   }
 
   openURL(url) {
