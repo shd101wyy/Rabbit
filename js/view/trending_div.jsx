@@ -27,7 +27,7 @@ class TrendingDiv extends React.Component {
   }
 
   clickTag(tag) {
-    ipcRenderer.send('show-topic', tag)
+    ipcRenderer.send('show-topic-page', tag)
   }
 
   componentDidMount() {

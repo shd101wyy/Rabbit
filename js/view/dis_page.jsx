@@ -4,6 +4,7 @@ import {browserHistory} from 'react-router'
 import FeedDiv from './feed_div.jsx'
 
 import homeAPI from '../api/home_api.js'
+import utility from '../utility.js'
 
 class DISPage extends React.Component {
   constructor() {
@@ -17,7 +18,7 @@ class DISPage extends React.Component {
   }
 
   componentDidMount() {
-    const source = decodeURIComponent(this.props.params.source)
+    const {source} = this.props
 
     homeAPI.getDISInfo(source, (data) => {
       console.log(data)
@@ -34,7 +35,7 @@ class DISPage extends React.Component {
   }
 
   clickFollowBtn() {
-    const source = decodeURIComponent(this.props.params.source)
+    const {source} = this.props
 
     homeAPI.follow(source, (data)=> {
       if (data.success) {
@@ -44,7 +45,7 @@ class DISPage extends React.Component {
   }
 
   clickUnfollowBtn() {
-    const source = decodeURIComponent(this.props.params.source)
+    const {source} = this.props
 
     homeAPI.unfollow(source, (data)=> {
       if (data.success) {
@@ -54,7 +55,7 @@ class DISPage extends React.Component {
   }
 
   render() {
-    const source = decodeURIComponent(this.props.params.source)
+    const {source} = this.props
       if (!this.state.dis || this.state.following === undefined) {
         return <div className="page dis-page">
           <div className="status">loading page...</div>
@@ -76,7 +77,7 @@ class DISPage extends React.Component {
           <div className="cover" style={{
             backgroundImage: `url(${cover})`
           }}>
-            <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={()=> browserHistory.goBack()}></i>
+            <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={utility.historyGoBack}></i>
           </div>
           <div className="profile-container">
             <div className="author-image" style={{
@@ -97,6 +98,11 @@ class DISPage extends React.Component {
           </FeedDiv>
         </div>
       }
-    }
+}
 
-    export default DISPage
+
+DISPage.PropTypes = {
+  source: React.PropTypes.string.isRequired,
+}
+
+export default DISPage

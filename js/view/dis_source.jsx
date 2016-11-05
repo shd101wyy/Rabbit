@@ -20,7 +20,7 @@ class DisSource extends React.Component {
       updated = new Date(dis.updated)
       // following = dis.following
 
-    return <div className="dis-source" onClick={()=> browserHistory.push(`/dis/${encodeURIComponent(source)}`)}>
+    return <div className="dis-source" onClick={()=> ipcRenderer.send('show-dis-page', source)}>
       <img className="dis-image" src={image}/>
       <div className="content">
         <div className="top-badge">

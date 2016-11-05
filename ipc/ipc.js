@@ -70,8 +70,16 @@ module.exports = function({mainWin}) {
     openFile(data)
   })
 
-  ipcMain.on('show-topic', function(event, data) {
-    event.sender.send('show-topic', data)
+  ipcMain.on('show-topic-page', function(event, tag) {
+    event.sender.send('show-topic-page', tag)
+  })
+
+  ipcMain.on('show-dis-page', function(event, source) {
+    event.sender.send('show-dis-page', source)
+  })
+
+  ipcMain.on('show-feed-page', function(event, _id) {
+    event.sender.send('show-feed-page', _id)
   })
 
   ipcMain.on('history-go-back', function(event, data) {

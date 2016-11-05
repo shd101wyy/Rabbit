@@ -15,11 +15,11 @@ class FeedPage extends React.Component {
   }
 
   componentDidMount() {
-    const feedObjectId = this.props.params.feedObjectId
+    const {feedObjectId} = this.props
     homeAPI.getFeed(feedObjectId, (data)=> {
       if (!data.success) {
         alert('Failed to load page')
-        return browserHistory.goBack()
+        return utility.historyGoBack()
       }
       this.setState({feed: data.data})
     })
@@ -37,7 +37,7 @@ class FeedPage extends React.Component {
   render() {
     if (!this.state.feed) {
       return <div className="page feed-page">
-        <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={()=> browserHistory.goBack()}></i>
+        <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={utility.historyGoBack}></i>
         <div className="status"> loading page... </div>
       </div>
     }
@@ -60,7 +60,7 @@ class FeedPage extends React.Component {
     } // TODO: text type
 
     return <div className="page feed-page">
-      <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={()=> browserHistory.goBack()}></i>
+      <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={utility.historyGoBack}></i>
       <div className="header">
         <div className="column-1-1">
           Feed
@@ -72,5 +72,11 @@ class FeedPage extends React.Component {
     </div>
   }
 }
+
+
+FeedPage.PropTypes = {
+  feedObjectId: React.PropTypes.string.isRequired,
+}
+
 
 export default FeedPage

@@ -7,6 +7,8 @@ const {ipcRenderer} = require('electron')
 // import FeedDiv from './feed_div.jsx'
 // import SearchResultsDiv from './search_results_div.jsx'
 import NavDiv from './nav_div.jsx'
+import DISPage from './dis_page.jsx'
+import FeedPage from './feed_page.jsx'
 import TopicPage from './topic_page.jsx'
 
 import homeAPI from '../api/home_api.js'
@@ -25,11 +27,24 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('show-topic', (event, data)=> {
-      console.log(data)
-      const topicPage =  <TopicPage tag={data}></TopicPage>
+    ipcRenderer.on('show-topic-page', (event, tag)=> {
+      const topicPage =  <TopicPage tag={tag}></TopicPage>
       const {history} = this.state
       history.push(topicPage)
+      this.setState({history})
+    })
+
+    ipcRenderer.on('show-dis-page', (event, source)=> {
+      const disPage =  <DISPage source={source}></DISPage>
+      const {history} = this.state
+      history.push(disPage)
+      this.setState({history})
+    })
+
+    ipcRenderer.on('show-feed-page', (event, _id)=> {
+      const feedPage =  <FeedPage feedObjectId={_id}></FeedPage>
+      const {history} = this.state
+      history.push(feedPage)
       this.setState({history})
     })
 
@@ -73,7 +88,7 @@ class Home extends React.Component {
     return <div className="home">
       <NavDiv></NavDiv>
       {this.props.children}
-      {history.length ? history[history.length-1] : null }
+      {history}
     </div>
   }
 }
