@@ -207,6 +207,22 @@ const utility = {
         image.style.width = '100%'
       }
     }
+
+    // truncate link
+    const as = elem.getElementsByTagName('a')
+    for (let i = 0; i < as.length; i++) {
+      const a = as[i]
+      let textContent = a.textContent
+      textContent = textContent.replace(/^(http|https):\/\/www\./, '')
+      a.textContent = textContent
+      if (textContent.length >= 20) {
+        a.textContent = textContent.slice(0, 20) + '...'
+      }
+      a.onclick = function(e) {
+        e.preventDefault()
+        ipcRenderer.send('open-url', a.href)
+      }
+    }
   }
 }
 
