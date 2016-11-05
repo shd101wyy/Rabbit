@@ -1,4 +1,6 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
+
 const path = require('path')
 const {app} = require('electron').remote
 
@@ -29,7 +31,7 @@ class SubscriptionsPage extends React.Component {
   }
 
   clickSubscription(source) {
-    console.log('source: ' + source)
+    browserHistory.push('/dis/' + encodeURIComponent(source))
   }
 
   render() {

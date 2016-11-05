@@ -163,6 +163,7 @@ body button,
 }
 .page {
   margin-left: 78px;
+  width: calc(100% -  78px);
   height: 100%;
   background-color: #fff;
 }
@@ -205,7 +206,6 @@ body button,
   padding: 12px 14px;
   position: fixed;
   top: 0;
-  z-index: 10;
   text-align: center;
   overflow: auto;
   -webkit-user-select: none;
@@ -253,86 +253,6 @@ body button,
 .nav-div .section.selected {
   color: #eee;
 }
-.article-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 30;
-}
-.article-panel .article-panel-background {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(16, 25, 33, 0.8);
-  cursor: pointer;
-}
-.article-panel .article-container {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 1024px;
-  max-width: 100%;
-  height: 100%;
-  border-left: 1px solid black;
-  background-color: #fff;
-  padding: 48px 128px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-@media (max-width: 768px) {
-  .article-panel .article-container {
-    padding: 12px;
-  }
-}
-.article-panel .article-container .header {
-  margin-bottom: 36px;
-}
-.article-panel .article-container .header .title {
-  font-size: 28px;
-  font-weight: 400;
-}
-.article-panel .article-container .close-btn {
-  position: fixed;
-  left: 12px;
-  top: 0;
-  font-size: 32px;
-  color: #999;
-}
-.article-panel .article-container .close-btn:hover {
-  cursor: pointer;
-  color: #666;
-  text-decoration: none;
-}
-.article-panel .article-container .html-content {
-  color: #222;
-  font-size: 14px;
-  line-height: 22px;
-  word-wrap: break-word;
-  -webkit-font-smoothing: subpixel-antialiased;
-}
-@media (max-width: 768px) {
-  .article-panel .article-container .html-content {
-    font-size: 14px;
-  }
-}
-.article-panel .article-container .html-content img {
-  display: block;
-  margin-bottom: 12px;
-  max-width: 100% !important;
-}
-.article-panel .article-container .html-content video {
-  width: 100%;
-  height: auto;
-  /* max-height: 402px; */
-  max-height: 100%;
-}
-.article-panel .article-container .html-content blockquote {
-  font-size: 14px;
-}
-.article-panel .article-container .visit-website-btn {
-  margin-top: 32px;
-}
 .dis-source {
   margin: 0;
   position: relative;
@@ -344,7 +264,6 @@ body button,
   box-sizing: border-box;
   border-radius: 2px;
   border: 1px solid #eee;
-  z-index: 1;
 }
 .dis-source .dis-image {
   float: left;
@@ -398,7 +317,6 @@ body button,
   border-radius: 3px;
   word-wrap: break-word;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.18);
-  z-index: 1;
   border-bottom: 1px solid rgba(63, 64, 85, 0.25);
   *zoom: 1;
 }
@@ -414,8 +332,8 @@ body button,
 .feed .feed-sidebar {
   float: left;
   text-align: center;
-  width: 58px;
-  padding: 6px 4px;
+  width: 72px;
+  padding: 6px 12px;
   *zoom: 1;
 }
 .feed .feed-sidebar:after,
@@ -431,10 +349,11 @@ body button,
   width: 48px;
   height: 48px;
   border-radius: 24px;
+  cursor: pointer;
 }
 .feed .feed-container {
   float: left;
-  width: calc(100% -  58px);
+  width: calc(100% -  72px);
   *zoom: 1;
 }
 .feed .feed-container:after,
@@ -451,6 +370,7 @@ body button,
   font-size: 12px;
   margin-bottom: 4px;
   padding: 8px;
+  padding-left: 0;
   *zoom: 1;
 }
 .feed .feed-header:after,
@@ -465,6 +385,7 @@ body button,
 .feed .feed-header .author {
   font-weight: 600;
   margin-right: 12px;
+  cursor: pointer;
 }
 .feed .feed-header .date {
   color: #8899a6;
@@ -473,7 +394,6 @@ body button,
   margin-bottom: 4px;
   font-weight: 500;
   color: #333;
-  padding-left: 8px;
 }
 .feed .feed-link {
   margin-left: 6px;
@@ -516,6 +436,7 @@ body button,
 }
 .feed .article-summary {
   padding: 0 8px;
+  padding-left: 0;
   font-size: 13px;
 }
 .feed .message {
@@ -524,7 +445,7 @@ body button,
 }
 .feed .show-article {
   margin-top: 8px;
-  padding: 0 0 8px 8px;
+  padding: 0 0 8px 0;
 }
 .feed .show-article a {
   cursor: pointer;
@@ -535,7 +456,6 @@ body button,
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 20;
 }
 .feed-dialog-container .feed-dialog-background {
   width: 100%;
@@ -734,7 +654,6 @@ body button,
 .home-feed-page .header {
   background-color: #fff;
   border-bottom: 1px solid rgba(63, 64, 85, 0.25);
-  z-index: 10;
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
@@ -748,7 +667,6 @@ body button,
 .subscriptions-page .header {
   background-color: #fff;
   border-bottom: 1px solid rgba(63, 64, 85, 0.25);
-  z-index: 10;
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
@@ -795,11 +713,12 @@ body button,
   border-radius: 24px;
 }
 .subscriptions-page .subscriptions-list .subscription-item .name {
-  float: left;
   height: 100%;
   font-size: 14px;
   word-wrap: break-word;
   line-height: 48px;
+  white-space: nowrap;
+  max-width: 200px;
 }
 .video-window {
   width: 100%;
@@ -857,4 +776,69 @@ body button,
 }
 .tag:hover {
   background-color: #e0e6de;
+}
+.dis-page {
+  overflow-y: auto;
+  padding: 0;
+}
+.dis-page .profile {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #cfd0d5;
+  padding-bottom: 12px;
+}
+.dis-page .profile .back-btn {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+.dis-page .profile .back-btn:hover {
+  font-size: 20px;
+}
+.dis-page .profile .cover {
+  width: 100%;
+  height: 150px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.dis-page .profile .profile-container {
+  margin: 0 auto;
+  padding: 6px 12px;
+}
+.dis-page .profile .profile-container .author-image {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  border-radius: 40px;
+  position: absolute;
+  transform: translatey(-50%);
+  border: 4px solid #ffffff;
+}
+.dis-page .profile .profile-container .title {
+  position: relative;
+  font-weight: 800;
+  font-size: 14px;
+  margin-top: 35px;
+  padding: 6px 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+}
+.dis-page .profile .profile-container .description {
+  font-size: 12px;
+  color: #777;
+}
+.dis-page .feed-div {
+  height: 100%;
+}
+.dis-page .status {
+  margin-top: 24px;
+  margin-bottom: 48px;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
 }

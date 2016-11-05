@@ -15,14 +15,14 @@ class App extends React.Component {
         const {email, password} = data.data
         userAPI.login(email, password, function(data) {
           if (data.success) {
-            browserHistory.push('/')
+            browserHistory.push('/rabbit')
           } else {
             browserHistory.push('/login')
           }
         })
       }
     })
-    browserHistory.push('/')
+    browserHistory.push('/login')
   }
   render() {
     return  <div>

@@ -17,7 +17,7 @@ class HomeFeedPage extends React.Component {
           Home
         </div>
       </div>
-      <FeedDiv source={this.props.source}> </FeedDiv>
+      <FeedDiv source={'localhost'}> </FeedDiv>
     </div>
   }
 }

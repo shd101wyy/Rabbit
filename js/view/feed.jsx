@@ -1,4 +1,5 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
 
 const {ipcRenderer} = require('electron')
 
@@ -13,6 +14,7 @@ class Feed extends React.Component {
     }
 
     this.showArticle = this.showArticle.bind(this)
+    this.showDISPage = this.showDISPage.bind(this)
   }
 
   componentDidMount() {
@@ -51,6 +53,11 @@ class Feed extends React.Component {
     ipcRenderer.send('open-url', url)
   }
 
+  showDISPage() {
+    const {source} = this.props.dis
+    browserHistory.push('/dis/' + encodeURIComponent(source))
+  }
+
   render() {
     const dis = this.props.dis,
       feed = this.props.feed
@@ -82,11 +89,11 @@ class Feed extends React.Component {
 
       return <div className="feed">
         <div className="feed-sidebar">
-          <img className="author-image" src={disImage}/>
+          <img className="author-image" src={disImage} onClick={this.showDISPage}/>
         </div>
-        <div className="feed-container"> 
+        <div className="feed-container">
           <div className="feed-header">
-            <div className="author">{disTitle}</div>
+            <div className="author" onClick={this.showDISPage}>{disTitle}</div>
             <div className="date">{utility.formatDate(feed.updated)}</div>
           </div>
           <div className="content">

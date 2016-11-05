@@ -113,6 +113,7 @@ class FeedDiv extends React.Component {
         {feeds} = dis
 
     return <div className="feed-div">
+      {this.props.profile}
       {feeds.map((feed, offset) => {
         if (dis.source === 'localhost') { // home feeds
           return <Feed feed={feed} dis={feed.dis}></Feed>

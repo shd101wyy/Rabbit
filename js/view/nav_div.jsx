@@ -1,22 +1,28 @@
 import React from 'react'
+import {browserHistory} from 'react-router'
 
 class NavDiv extends React.Component {
   constructor() {
     super()
+    this.state = {
+      page: 'SEARCH_PAGE'
+    }
   }
 
-  // clickDIS(source) {
-  //  this.props.retrieveDISFeeds(source)
-  // }
+  componentDidMount() {
+    browserHistory.push('/rabbit/search_page')
+    window.browserHistory = browserHistory
+  }
 
   clickSection(name) {
-    this.props.setPage(name)
+    browserHistory.push('/rabbit/' + name.toLowerCase())
+    this.setState({page: name})
   }
 
   render() {
     // let subscriptions = this.props.subscriptions,
     // currentlyViewingDIS = this.props.currentlyViewingDIS
-    const page = this.props.page
+    const {page} = this.state
 
     return <div className="nav-div">
       {/*<div className="search-box-div">
@@ -43,11 +49,6 @@ class NavDiv extends React.Component {
 }
 
 NavDiv.propTypes = {
-  // subscriptions: React.PropTypes.array.isRequired,
-  // currentlyViewingDIS: React.PropTypes.object.isRequired,
-  // retrieveDISFeeds: React.PropTypes.func.isRequired
-  page: React.PropTypes.string.isRequired,
-  setPage: React.PropTypes.func.isRequired
 }
 
 export default NavDiv

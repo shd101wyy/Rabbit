@@ -1,0 +1,79 @@
+// main: ./entry.less
+
+.dis-page {
+  overflow-y: auto;
+  // margin: 0;
+  padding: 0;
+
+  .profile {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #cfd0d5;
+    padding-bottom: 12px;
+
+    .back-btn {
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      font-size: 18px;
+      color: #333;
+      cursor: pointer;
+
+      &:hover {
+        font-size: 20px;
+      }
+    }
+
+    .cover {
+      width: 100%;
+      height: 150px;
+      background-size: cover;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }
+
+    .profile-container {
+      margin: 0 auto;
+      padding: 6px 12px;
+
+      .author-image {
+        width: 80px;
+        height: 80px;
+        background-size: cover;
+        border-radius: 40px;
+        position: absolute;
+        transform: translatey(-50%);
+        border: 4px solid rgb(255, 255, 255);
+      }
+
+      .title {
+        position: relative;
+        font-weight: 800;
+        font-size: 14px;
+        margin-top: 35px;
+        padding: 6px 0;
+        background-color: hsla(0,0%,100%,.7);
+        border-radius: 6px;
+      }
+
+      .description {
+        font-size: 12px;
+        color: #777;
+      }
+    }
+  }
+
+  .feed-div {
+    height: 100%;
+  }
+
+  .status {
+    margin-top: 24px;
+    margin-bottom: 48px;
+    font-size: 24px;
+    font-weight: 300;
+    text-align: center;
+  }
+}

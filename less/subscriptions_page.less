@@ -4,7 +4,6 @@
   .header {
     background-color: #fff;
     border-bottom: 1px solid rgba(63, 64, 85, 0.25);
-    z-index: 10;
     -webkit-user-select: none;
     -webkit-app-region: drag;
 
@@ -47,11 +46,12 @@
       }
 
       .name {
-        float: left;
         height: 100%;
         font-size: 14px;
         word-wrap: break-word;
         line-height: 48px;
+        white-space: nowrap;
+        max-width: 200px;
       }
     }
   }

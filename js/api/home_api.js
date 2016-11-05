@@ -77,7 +77,7 @@ const homeAPI = {
   },
 
   getFeeds: function({source, page=0, count=10}, callback) {
-    $.ajax(url.resolve(IP, `/get_feeds?source=${source}&page=${page}&count=${count}`), {
+    $.ajax(url.resolve(IP, `/get_feeds?source=${encodeURIComponent(source)}&page=${page}&count=${count}`), {
       'type': 'GET',
       dataType: 'json',
       success: function(res) {
@@ -100,6 +100,23 @@ const homeAPI = {
       data: {
         feedData: JSON.stringify(feedData)
       },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  getDISInfo(source, callback) {
+    $.ajax(url.resolve(IP, `/get_dis_info?source=${encodeURIComponent(source)}`), {
+      'type': 'GET',
+      dataType: 'json',
       success: function(res) {
         if (res && callback) {
           callback(res)
