@@ -25,6 +25,11 @@ class FeedPage extends React.Component {
     })
   }
 
+  componentDidUpdate() {
+    const contentElement = this.refs.content
+    utility.linkVideos(contentElement)
+  }
+
   openURL(url) {
     ipcRenderer.send('open-url', url)
   }
@@ -45,8 +50,8 @@ class FeedPage extends React.Component {
       contentElement = <div>
         <div className="title">{title}</div>
         {markdown ?
-        <div className="content" dangerouslySetInnerHTML={{__html: utility.renderMarkdown(markdown, {unescape: true})}}></div> :
-        <div className="content" dangerouslySetInnerHTML={{__html: utility.convertHTML(html, {unescape: true})}}></div>
+        <div ref="content" className="content" dangerouslySetInnerHTML={{__html: utility.renderMarkdown(markdown, {unescape: true})}}></div> :
+        <div ref="content" className="content" dangerouslySetInnerHTML={{__html: utility.convertHTML(html, {unescape: true})}}></div>
         }
         {link ?
         <div className="link-btn" onClick={this.openURL.bind(this, link)}> Visit website </div> : null

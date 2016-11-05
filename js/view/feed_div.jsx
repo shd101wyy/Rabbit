@@ -65,7 +65,8 @@ class FeedDiv extends React.Component {
         this.elem.addEventListener('scroll', this.handleScroll)
 
         let dis = data.data
-        if (dis.feeds.length < feedsPerPage) { // no more feeds // TODO: save page as state?
+        let length = dis.feeds.length
+        if (!length) { // no more feeds // TODO: save page as state?
           return this.setState({
             loadingFeeds: false,
             noMoreFeeds: true,
@@ -91,8 +92,8 @@ class FeedDiv extends React.Component {
 
         this.setState({
           loadingFeeds: false,
-          noMoreFeeds: false,
-          status: '',
+          noMoreFeeds: (length < feedsPerPage), // false,
+          status: (length < feedsPerPage ? 'no more feeds :(' : ''),
           dis: dis
         })
       })
@@ -103,6 +104,7 @@ class FeedDiv extends React.Component {
     let dis = this.state.dis
     if (!dis || !dis.feeds || !dis.feeds.length) {
       return <div className="feed-div">
+        {this.props.profile}
         <div className="status">
           No feeds :(
         </div>

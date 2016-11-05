@@ -414,28 +414,6 @@ body button,
   background-position: 50% 50%;
   cursor: pointer;
 }
-.feed .article-media .summary-video {
-  position: relative;
-  width: 100%;
-  padding-top: 62.5%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: #222;
-  cursor: pointer;
-}
-.feed .article-media .summary-video .play-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  color: #222;
-}
-.feed .article-media .summary-video:hover .play-icon {
-  color: #000;
-  font-size: 58px;
-}
 .feed .article-summary {
   padding: 0 8px;
   padding-left: 0;
@@ -451,6 +429,28 @@ body button,
 }
 .feed .show-article a {
   cursor: pointer;
+}
+.summary-video {
+  position: relative;
+  width: 100%;
+  padding-top: 62.5%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: #222;
+  cursor: pointer;
+}
+.summary-video .play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: #222;
+}
+.summary-video:hover .play-icon {
+  color: #000;
+  font-size: 58px;
 }
 .feed-dialog-container {
   position: absolute;
@@ -960,6 +960,11 @@ body button,
 .feed-page .feed-page-div img {
   max-width: 100% !important;
   margin: 12px 0;
+}
+.feed-page .feed-page-div video {
+  max-width: 100% !important;
+  margin: 12px 0;
+  width: 100%;
 }
 .feed-page .feed-page-div .link-btn {
   width: 100%;

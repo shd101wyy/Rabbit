@@ -1,5 +1,6 @@
 const Autolinker = require('autolinker'),
-  validator = require('validator')
+  validator = require('validator'),
+  {ipcRenderer} = require('electron')
 
 import remarkable from 'remarkable'
 import async from 'async'
@@ -173,6 +174,26 @@ const utility = {
       })
     })
   },
+
+  linkVideos(elem) {
+    const videos = elem.getElementsByTagName('video')
+    for (let i = 0; i < videos.length; i++) {
+      const video = videos[i]
+      const source = (video.getElementsByTagName('source')[0] || {}).src,
+            poster = video.getAttribute('poster')
+
+      const wrapper = document.createElement('div')
+      wrapper.style.backgroundImage = `url(${poster})`
+      wrapper.classList.add('summary-video')
+      wrapper.onclick = function() {
+        ipcRenderer.send('show-video-window', source)
+      }
+
+      wrapper.innerHTML = `<i class="fa fa-play-circle-o play-icon" aria-hidden="true"></i>`
+
+      video.parentElement.replaceChild(wrapper, video)
+    }
+  }
 }
 
 export default utility
