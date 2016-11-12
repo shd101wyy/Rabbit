@@ -925,6 +925,79 @@ body input,
 .video-window:hover .close-btn {
   display: block;
 }
+#notification-window {
+  width: 100%;
+  padding: 12px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-user-select: none;
+}
+#notification-window .notification {
+  background-color: #fff;
+  color: #333;
+  padding: 12px;
+  cursor: pointer;
+  width: 300px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 12px rgba(153, 153, 153, 0.6);
+  display: block;
+  transform: translatez(0);
+  *zoom: 1;
+  animation: fadein 0.4s;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.98;
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 0.98;
+  }
+  to {
+    opacity: 0;
+  }
+}
+#notification-window .notification:after,
+#notification-window .notification:before {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+#notification-window .notification:after {
+  clear: both;
+}
+#notification-window .notification.fadeout {
+  animation: fadeout 0.6s;
+}
+#notification-window .notification .icon-div {
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-right: 12px;
+}
+#notification-window .notification .icon-div .icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+}
+#notification-window .notification .content {
+  float: left;
+  width: 200px;
+}
+#notification-window .notification .content .title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+#notification-window .notification .content .message {
+  font-weight: 400;
+  font-size: 14px;
+}
 .trending-div,
 .top-subscriptions-div {
   overflow-y: auto;

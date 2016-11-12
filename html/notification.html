@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <title> Rabbit </title>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+  <link rel="stylesheet" href="../bundle.css">
+  <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div id="notification-window">
+  </div>
+</body>
+<!-- jQuery -->
+<script>
+  window.$ = window.jQuery = window.jquery = require('../lib/jquery-3.1.1.min.js')
+</script>
+
+<!-- ipc -->
+<script>
+  const {
+    ipcRenderer
+  } = require('electron')
+
+  window.notify = function(data) {
+    const notification = document.createElement('div')
+    notification.classList.add('notification')
+    notification.innerHTML = `
+    <div class="icon-div">
+      <img class="icon" src="${data.icon}" />
+    </div>
+    <div class="content">
+      <div class="title">${data.title}</div>
+      <div class="message">${data.message || ''}</div>
+    </div>
+    `
+    const notificationWin = document.getElementById('notification-window')
+    notificationWin.insertAdjacentElement('afterbegin', notification)
+
+    ipcRenderer.send('set-notification-window-height', notificationWin.offsetHeight)
+
+    const timeout = data.timeout || 8000
+    setTimeout(function() {
+      notification.classList.add('fadeout')
+      setTimeout(function() {
+        notification.remove()
+        ipcRenderer.send('set-notification-window-height', notificationWin.offsetHeight)
+      }, 600) // check notification_window.less = &.fadeout
+    }, timeout)
+
+    if (data.link) {
+      notification.onclick = function() {
+        ipcRenderer.send('open-url', data.link)
+      }
+    }
+  }
+
+  ipcRenderer.on('receive-notification-request', function(event, {data}) {
+    notify(data)
+  })
+</script>
+
+<script>
+  const {
+    remote
+  } = require('electron')
+  const {
+    Menu,
+    MenuItem
+  } = remote
+
+  let rightClickPosition = null
+
+  const menu = new Menu()
+  const menuItem = new MenuItem({
+    label: 'Inspect Element',
+    click: () => {
+      remote.getCurrentWindow().inspectElement(rightClickPosition.x, rightClickPosition.y)
+    }
+  })
+  menu.append(menuItem)
+
+  window.addEventListener('contextmenu', (e) => {
+    e.preventDefault()
+    rightClickPosition = {
+      x: e.x,
+      y: e.y
+    }
+    menu.popup(remote.getCurrentWindow())
+  }, false)
+</script>
+
+</html>

@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "^2.1.2",
     "autolinker": "^1.2.1",
+    "electron-notifications": "^0.1.1",
     "highlight.js": "^9.7.0",
     "masonry-layout": "^4.1.1",
     "nedb": "^1.8.0",

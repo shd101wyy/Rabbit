@@ -9,7 +9,7 @@ socket.on('connect', function() {
 })
 
 socket.on('feed-notification', function(feed) {
-  console.log('receive-feed-notification', feed)
+  ipcRenderer.send('feed-notification', feed)
 })
 
 socket.on('removed-pending-notifications', function({source, userId}) {
@@ -39,8 +39,8 @@ const notificationsStore = {
           }
         })
 
+        console.log(pendingNotifications)
         ipcRenderer.send('alert-pending-notifications', pendingNotifications)
-
         this.updateComponent()
       }
     })

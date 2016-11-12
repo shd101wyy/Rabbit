@@ -1,0 +1,74 @@
+// main: ./entry.less
+
+#notification-window {
+  width: 100%;
+  padding: 12px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0);
+  // background-color: #fff;
+  -webkit-user-select: none;
+  // -webkit-app-region: drag;
+
+
+  .notification {
+    @icon-width: 56px;
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 0.98; }
+    }
+
+    @keyframes fadeout {
+      from { opacity: 0.98; }
+      to   { opacity: 0; }
+    }
+
+    background-color: #fff;
+    color: #333;
+    padding: 12px;
+    cursor: pointer;
+    width: 300px;
+    // height: 80px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 12px rgba(153, 153, 153, 0.6);
+    display: block;
+    transform: translatez(0);
+    .clearfix();
+
+    animation: fadein 0.4s;
+
+    &.fadeout {
+      animation: fadeout 0.6s;
+    }
+
+    .icon-div {
+      float: left;
+      width: @icon-width;
+      height: @icon-width;
+      margin-right: 12px;
+
+      .icon {
+        width: @icon-width;
+        height: @icon-width;
+        border-radius: @icon-width/2;
+      }
+    }
+
+    .content {
+      float: left;
+      width: 200px;
+
+      .title {
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 16px;
+      }
+
+      .message {
+        font-weight: 400;
+        font-size: 14px;
+      }
+    }
+  }
+}
