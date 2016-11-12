@@ -88,7 +88,7 @@ class DISPage extends React.Component {
       }
 
       const {dis} = this.state
-        let cover = dis.cover || 'rabbit://images/default_cover.jpg',
+        let cover = dis.cover || 'rabbit://images/default_cover_2.jpg',
           title = dis.title,
           author = dis.author,
           description = dis.description,
@@ -102,7 +102,6 @@ class DISPage extends React.Component {
           <div className="cover" style={{
             backgroundImage: `url(${cover})`
           }}>
-            <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={utility.historyGoBack}></i>
           </div>
           <div className="profile-container">
             <div className="author-image" style={{
@@ -131,6 +130,12 @@ class DISPage extends React.Component {
         </div>
 
         return <div className="page dis-page">
+          <i className="back-btn fa fa-chevron-left" aria-hidden="true" onClick={utility.historyGoBack}></i>
+          <div className="header">
+            <div className="column-1-1">
+              Feed
+            </div>
+          </div>
           <FeedDiv source={source} profile={profile}>
           </FeedDiv>
         </div>

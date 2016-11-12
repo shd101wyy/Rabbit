@@ -1,4 +1,5 @@
 // store notifications
+const {ipcRenderer} = require('electron')
 
 import homeAPI from '../api/home_api.js'
 
@@ -11,16 +12,35 @@ socket.on('feed-notification', function(feed) {
   console.log('receive-feed-notification', feed)
 })
 
+socket.on('removed-pending-notifications', function({source, userId}) {
+  delete notificationsStore.pendingNotifications[source]
+  notificationsStore.updateComponent()
+})
+
 const notificationsStore = {
   notifications: [],
+  pendingNotifications: {},
   component: null,
   init() {
     homeAPI.getNotificationsData((data)=> {
       if (data.success) {
-        let notifications = data.data
+        let {notifications, pendingNotifications} = data.data
         notifications.forEach((n)=> n.updated = new Date(n.updated))
         notifications.sort((a, b)=> b.updated - a.updated)
         this.notifications = notifications
+        this.pendingNotifications = pendingNotifications
+
+        // put title to pendingNotifications
+        notifications.forEach((n)=> {
+          if (!pendingNotifications[n.source]) return
+          pendingNotifications[n.source] = {
+            count: pendingNotifications[n.source],
+            title: n.title
+          }
+        })
+
+        ipcRenderer.send('alert-pending-notifications', pendingNotifications)
+
         this.updateComponent()
       }
     })
@@ -29,14 +49,17 @@ const notificationsStore = {
 
   updateComponent() {
     if (!this.component) return
-    this.component.setState({notifications: this.notifications})
+    this.component.setState({notifications: this.notifications, pendingNotifications: this.pendingNotifications})
   },
 
   bindComponent(component) {
     this.component = component
     this.updateComponent()
-  }
+  },
 
+  removePendingNotifications(source) {
+    socket.emit('remove-pending-notifications', {source, userId})
+  }
 }
 
 export default notificationsStore

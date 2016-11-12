@@ -67,7 +67,7 @@ module.exports = function({mainWin}) {
   })
 
   ipcMain.on('open-url', function(event, data) {
-    if (!data) return 
+    if (!data) return
     openFile(data)
   })
 
@@ -89,6 +89,23 @@ module.exports = function({mainWin}) {
 
   ipcMain.on('clear-history', function(event, data) {
     event.sender.send('clear-history')
+  })
+
+  ipcMain.on('alert-pending-notifications', function(event, data) {
+    let count = 0
+    let message = ''
+    for (let source in data) {
+      const {count, title} = data[source]
+      message += `${title}: ${count} notifications. \n`
+    }
+
+    notifier.notify({
+      title: 'You have the following unread notifications',
+      message: message,
+      sound: true,
+      timeout: 10,
+      icon: path.resolve(__dirname, '../images/rss-icon.png')
+    })
   })
 
 }

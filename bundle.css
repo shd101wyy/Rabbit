@@ -989,23 +989,36 @@ body input,
   padding: 0;
   z-index: 1;
 }
+.dis-page .header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(63, 64, 85, 0.25);
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+.dis-page .header .column-1-1 {
+  padding: 12px;
+  font-size: 16px;
+}
+.dis-page .header .column-1-1:hover {
+  cursor: pointer;
+}
+.dis-page .back-btn {
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+.dis-page .back-btn:hover {
+  font-size: 20px;
+}
 .dis-page .profile {
   -webkit-user-select: none;
   -webkit-app-region: drag;
   margin-bottom: 12px;
   border-bottom: 1px solid #cfd0d5;
   padding-bottom: 12px;
-}
-.dis-page .profile .back-btn {
-  position: absolute;
-  left: 6px;
-  top: 6px;
-  font-size: 18px;
-  color: #333;
-  cursor: pointer;
-}
-.dis-page .profile .back-btn:hover {
-  font-size: 20px;
 }
 .dis-page .profile .cover {
   width: 100%;
@@ -1070,9 +1083,6 @@ body input,
 .dis-page .profile .profile-container .push-notification-config label {
   font-size: 12px;
   margin-left: -10px;
-}
-.dis-page .feed-div {
-  height: 100%;
 }
 .dis-page .status {
   margin-top: 24px;

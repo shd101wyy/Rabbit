@@ -13,6 +13,7 @@ class NotificationCard extends React.Component {
   constructor() {
     super()
     this.showDISPage = this.showDISPage.bind(this)
+    this.showDISPageAndRemovePendingNotification = this.showDISPageAndRemovePendingNotification.bind(this)
   }
 
   showDISPage(event) {
@@ -21,8 +22,17 @@ class NotificationCard extends React.Component {
     ipcRenderer.send('show-dis-page', source)
   }
 
-  render() {
+  showDISPageAndRemovePendingNotification(event) {
+    event.stopPropagation()
+    const {source} = this.props.notification
+    ipcRenderer.send('show-dis-page', source)
+
     const {notification} = this.props
+    notificationsStore.removePendingNotifications(notification.source)
+  }
+
+  render() {
+    const {notification, pendingNotificationNum} = this.props
     const image = notification.image || 'rabbit://images/rss-icon.png',
         updated = notification.updated,
         title = notification.title,
@@ -46,7 +56,11 @@ class NotificationCard extends React.Component {
             {text}
           </div>
           <div className="notification-footer">
-            <i className="history-icon fa fa-clock-o" aria-hidden="true" onClick={this.showDISPage}></i>
+            {
+              !pendingNotificationNum ?
+              <i className="history-icon fa fa-clock-o" aria-hidden="true" onClick={this.showDISPage}></i> :
+              <span className="new badge" onClick={this.showDISPageAndRemovePendingNotification}>{pendingNotificationNum}</span>
+            }
           </div>
         </div>
       </div>
@@ -57,7 +71,8 @@ class NotificationsPage extends React.Component {
   constructor() {
     super()
     this.state = {
-      notifications: []
+      notifications: [],
+      pendingNotifications: {}
     }
   }
 
@@ -66,7 +81,7 @@ class NotificationsPage extends React.Component {
   }
 
   render() {
-    const {notifications} = this.state
+    const {notifications, pendingNotifications} = this.state
     return <div className="page notifications-page">
       <div className="header">
         <div className="column-1-1">
@@ -74,7 +89,13 @@ class NotificationsPage extends React.Component {
         </div>
       </div>
       <div className="notifications-list">
-      {notifications.map((n)=> <NotificationCard notification={n}></NotificationCard>)}
+      {
+        notifications.map((n)=> {
+          const pendingNotification = pendingNotifications[n.source] || {}
+          let pendingNotificationNum = pendingNotification.count || 0
+          return <NotificationCard notification={n} pendingNotificationNum={pendingNotificationNum}></NotificationCard>
+        })
+      }
       </div>
     </div>
   }
