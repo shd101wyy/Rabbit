@@ -67,6 +67,7 @@ module.exports = function({mainWin}) {
   })
 
   ipcMain.on('open-url', function(event, data) {
+    if (!data) return 
     openFile(data)
   })
 

@@ -44,7 +44,7 @@ class DISPage extends React.Component {
 
     homeAPI.follow(source, (data)=> {
       if (data.success) {
-        this.setState({following: true})
+        this.setState({following: true, pushNotification: true})
       }
     })
   }
@@ -54,7 +54,7 @@ class DISPage extends React.Component {
 
     homeAPI.unfollow(source, (data)=> {
       if (data.success) {
-        this.setState({following: false})
+        this.setState({following: false, pushNotification: false})
       }
     })
   }
@@ -115,6 +115,8 @@ class DISPage extends React.Component {
             }
             <div className="title">{title}</div>
             <div className="description">{description}</div>
+            {
+              this.state.following ?
             <div className="push-notification-config">
               <div className="switch">
                 <label>
@@ -123,7 +125,8 @@ class DISPage extends React.Component {
                   Notification
                 </label>
               </div>
-            </div>
+            </div> : null
+            }
           </div>
         </div>
 

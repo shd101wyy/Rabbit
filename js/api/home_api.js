@@ -1,7 +1,7 @@
 const url = require('url')
 
 const homeAPI = {
-  search: function(searchText, callback) {
+  search(searchText, callback) {
     $.ajax(url.resolve(IP, `/search?q=${encodeURIComponent(searchText)}`), {
       'type': 'GET',
       dataType: 'json',
@@ -18,7 +18,7 @@ const homeAPI = {
     })
   },
 
-  getSubscriptions: function(callback) {
+  getSubscriptions(callback) {
     $.ajax(url.resolve(IP, '/get_subscriptions'), {
       'type': 'GET',
       dataType: 'json',
@@ -35,8 +35,24 @@ const homeAPI = {
     })
   },
 
+  getNotificationsData(callback) {
+    $.ajax(url.resolve(IP, '/get_notifications_data'), {
+      'type': 'GET',
+      dataType: 'json',
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
 
-  follow: function(source, callback) {
+  follow(source, callback) {
     $.ajax(url.resolve(IP, '/follow'), {
       'type': 'POST',
       dataType: 'json',

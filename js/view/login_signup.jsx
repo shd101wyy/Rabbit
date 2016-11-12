@@ -3,6 +3,7 @@ import {browserHistory} from 'react-router'
 const {ipcRenderer} = require('electron')
 
 import userAPI from '../api/user_api.js'
+import notificationsStore from '../model/notifications_store.js'
 
 class LoginSignup extends React.Component {
   constructor() {
@@ -39,6 +40,7 @@ class LoginSignup extends React.Component {
     userAPI.login(email, password, (res)=> {
       if (res.success) {
         ipcRenderer.send('save-user-info', {email, password})
+        notificationsStore.init()
         browserHistory.push('/')
       }
     })
@@ -53,6 +55,7 @@ class LoginSignup extends React.Component {
     userAPI.signup(email, username, password, (res)=> {
       if (res.success) {
         ipcRenderer.send('save-user-info', {email, password})
+        notificationsStore.init()
         browserHistory.push('/')
       }
     })

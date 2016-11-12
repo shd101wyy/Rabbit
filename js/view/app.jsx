@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import {browserHistory} from 'react-router'
 const {ipcRenderer} = require('electron')
 
+import notificationsStore from '../model/notifications_store.js'
+
 import userAPI from '../api/user_api.js'
 
 class App extends React.Component {
@@ -15,6 +17,7 @@ class App extends React.Component {
         const {email, password} = data.data
         userAPI.login(email, password, function(data) {
           if (data.success) {
+            notificationsStore.init()
             browserHistory.push('/rabbit')
           } else {
             browserHistory.push('/login')
