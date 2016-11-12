@@ -76,6 +76,46 @@ const homeAPI = {
     })
   },
 
+  subscribeNotification(source, callback) {
+    $.ajax(url.resolve(IP, '/subscribe_notification'), {
+      'type': 'POST',
+      dataType: 'json',
+      data: {
+        source: encodeURIComponent(source)
+      },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  unsubscribeNotification(source, callback) {
+    $.ajax(url.resolve(IP, '/unsubscribe_notification'), {
+      'type': 'POST',
+      dataType: 'json',
+      data: {
+        source: encodeURIComponent(source)
+      },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
   getFeeds({source, page=0, count=10}, callback) {
     $.ajax(url.resolve(IP, `/get_feeds?source=${encodeURIComponent(source)}&page=${page}&count=${count}`), {
       'type': 'GET',
@@ -166,6 +206,26 @@ const homeAPI = {
 
   checkFollowing(source, callback) {
     $.ajax(url.resolve(IP, '/check_following_source'), {
+      'type': 'POST',
+      dataType: 'json',
+      data: {
+        source: encodeURIComponent(source)
+      },
+      success: function(res) {
+        if (res && callback) {
+          callback(res)
+        } else if (callback) {
+          callback(null)
+        }
+      },
+      error: function(res) {
+        if (callback) callback(res || null)
+      }
+    })
+  },
+
+  checkPushNotification(source, callback) {
+    $.ajax(url.resolve(IP, '/check_push_notification'), {
       'type': 'POST',
       dataType: 'json',
       data: {

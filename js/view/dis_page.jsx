@@ -11,17 +11,19 @@ class DISPage extends React.Component {
     super()
     this.state = {
       dis: null,
-      following: undefined
+      following: undefined,
+      pushNotification: undefined
     }
     this.clickFollowBtn = this.clickFollowBtn.bind(this)
     this.clickUnfollowBtn = this.clickUnfollowBtn.bind(this)
+    this.subscribeNotification = this.subscribeNotification.bind(this)
+    this.unsubscribeNotification = this.unsubscribeNotification.bind(this)
   }
 
   componentDidMount() {
     const {source} = this.props
 
     homeAPI.getDISInfo(source, (data) => {
-      console.log(data)
       if (!data.success) {
         return alert('failed to DIS info')
       }
@@ -29,8 +31,11 @@ class DISPage extends React.Component {
     })
 
     homeAPI.checkFollowing(source, (data)=> {
-      console.log(data)
       this.setState({following: data.data})
+    })
+
+    homeAPI.checkPushNotification(source, (data)=> {
+      this.setState({pushNotification: data.data})
     })
   }
 
@@ -54,9 +59,29 @@ class DISPage extends React.Component {
     })
   }
 
+  subscribeNotification() {
+    const {source} = this.props
+
+    homeAPI.subscribeNotification(source, (data)=> {
+      if (data.success) {
+        this.setState({pushNotification: true})
+      }
+    })
+  }
+
+  unsubscribeNotification() {
+    const {source} = this.props
+
+    homeAPI.unsubscribeNotification(source, (data)=> {
+      if (data.success) {
+        this.setState({pushNotification: false})
+      }
+    })
+  }
+
   render() {
     const {source} = this.props
-      if (!this.state.dis || this.state.following === undefined) {
+      if (!this.state.dis || this.state.following === undefined || this.state.pushNotification === undefined) {
         return <div className="page dis-page">
           <div className="status">loading page...</div>
         </div>
@@ -93,7 +118,7 @@ class DISPage extends React.Component {
             <div className="push-notification-config">
               <div className="switch">
                 <label>
-                  <input type="checkbox" />
+                  <input type="checkbox" onClick={this.state.pushNotification ? this.unsubscribeNotification :  this.subscribeNotification} checked={this.state.pushNotification} />
                   <span className="lever"></span>
                   Notification
                 </label>
