@@ -4,7 +4,7 @@
   .header {
     -webkit-user-select: none;
     -webkit-app-region: drag;
-    
+
     @search-status-width: 64px;
     .search-status {
       width: @search-status-width;
@@ -21,7 +21,8 @@
 
     .search-box {
       float: left;
-      width: calc(~"100% - "@search-status-width);
+      // width: calc(~"100% - "@search-status-width);
+      width: 100%;
       height: 100%;
       padding: 4px 16px;
       border: none;
@@ -33,6 +34,10 @@
         background-color: #fafafa;
       }
     }
+  }
+
+  .container {
+    height: calc(~"100% - "@page-header-height);
   }
 
   .trending-section {

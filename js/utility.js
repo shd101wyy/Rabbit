@@ -1,6 +1,6 @@
 const Autolinker = require('autolinker'),
   validator = require('validator'),
-  {ipcRenderer} = require('electron')
+  {ipcRenderer, shell} = require('electron')
 
 import remarkable from 'remarkable'
 import async from 'async'
@@ -199,12 +199,25 @@ const utility = {
     for (let i = 0; i < images.length; i++) {
       const image = images[i]
       image.onload = function() {
-        if (image.width >= 200) {
+        if (image.width >= 150) {
           image.style.width = '100%'
         }
       }
-      if (image.width >= 200) {
+      if (image.width >= 150) {
         image.style.width = '100%'
+      }
+    }
+
+    const as = elem.getElementsByTagName('a')
+    for (let i = 0; i < as.length; i++) {
+      const a = as[i]
+      if (a.children.length) {
+        a.removeAttribute('title')
+      }
+
+      a.onclick = function(e) {
+        e.preventDefault()
+        shell.openExternal(a.href)
       }
     }
     /*

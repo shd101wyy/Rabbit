@@ -90,6 +90,15 @@ class DISPage extends React.Component {
             }
             <div className="title">{title}</div>
             <div className="description">{description}</div>
+            <div className="push-notification-config">
+              <div className="switch">
+                <label>
+                  <input type="checkbox" />
+                  <span className="lever"></span>
+                  Notification
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 

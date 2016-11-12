@@ -14,7 +14,7 @@ class SearchPage extends React.Component {
       status: null,
       showSearchResults: false,
       searchResults: null,
-      selected: 0,  // nav-btn
+      selected: 2,  // nav-btn
       searchType: 'general'
     }
 
@@ -51,15 +51,16 @@ class SearchPage extends React.Component {
   render() {
     return <div className="page search-page">
       <div className="header">
-        <div className="search-status">{this.state.searchType}</div>
+        {/* <div className="search-status">{this.state.searchType}</div> */}
         <input className="search-box" type="text" placeholder="Search & Add source" value={this.state.searchboxValue} onChange={this.handleSearchboxChange} onKeyDown={this.handleSearchboxKeydown}/>
       </div>
       <div className="container">
-      {/* TODO: 分成三栏： source | feed | tag */}
       {
         this.state.showSearchResults ?
         <SearchResultsDiv searchResults={this.state.searchResults}></SearchResultsDiv> :
         <div className="trending-section">
+        {/*
+          // TODO: only show top subscriptions for now.
           <div className="nav-button-group">
             <div className={"nav-btn column-1-3 " + (this.state.selected === 0 ? 'selected' : '')}
                  onClick={()=> this.setState({selected: 0})}> Trending </div>
@@ -68,6 +69,7 @@ class SearchPage extends React.Component {
             <div className={"nav-btn column-1-3 " + (this.state.selected === 2 ? 'selected' : '')}
                  onClick={()=> this.setState({selected: 2})}> Top Subscriptions </div>
           </div>
+          */}
           {
             this.state.selected === 0 ? <TrendingDiv></TrendingDiv> : (
             this.state.selected === 2 ? <TopSubscriptionsDiv></TopSubscriptionsDiv> : null

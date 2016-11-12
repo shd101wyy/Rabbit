@@ -31,7 +31,7 @@ class DisSource extends React.Component {
           {description}
         </div>
         <div className="popularities">
-          {'popularity: ' + popularities}
+          {'Followers ' + popularities}
         </div>
         {/*following ?
           <div type="button" className="follow-btn" onClick={this.clickUnfollowBtn}>unfollow</div> :
