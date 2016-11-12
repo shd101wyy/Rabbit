@@ -2,6 +2,15 @@
 
 import homeAPI from '../api/home_api.js'
 
+const socket = io(IP)
+socket.on('connect', function() {
+  console.log('connect')
+})
+
+socket.on('feed-notification', function(feed) {
+  console.log('receive-feed-notification', feed)
+})
+
 const notificationsStore = {
   notifications: [],
   component: null,
@@ -15,6 +24,7 @@ const notificationsStore = {
         this.updateComponent()
       }
     })
+    socket.emit('connect-user', userId)
   },
 
   updateComponent() {

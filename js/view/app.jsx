@@ -17,6 +17,7 @@ class App extends React.Component {
         const {email, password} = data.data
         userAPI.login(email, password, function(data) {
           if (data.success) {
+            window.userId = data.userId
             notificationsStore.init()
             browserHistory.push('/rabbit')
           } else {

@@ -39,6 +39,7 @@ class LoginSignup extends React.Component {
 
     userAPI.login(email, password, (res)=> {
       if (res.success) {
+        window.userId = res.userId
         ipcRenderer.send('save-user-info', {email, password})
         notificationsStore.init()
         browserHistory.push('/')
@@ -54,6 +55,7 @@ class LoginSignup extends React.Component {
     console.log('signup: ', username, password, email)
     userAPI.signup(email, username, password, (res)=> {
       if (res.success) {
+        window.userId = res.userId
         ipcRenderer.send('save-user-info', {email, password})
         notificationsStore.init()
         browserHistory.push('/')
