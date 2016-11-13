@@ -116,7 +116,7 @@ class DISPage extends React.Component {
             <div className="follow-btn" onClick={this.clickFollowBtn}>follow</div>
             }
             <div className="title">{title}</div>
-            <div className="description">{description}</div>
+            <div className="description" dangerouslySetInnerHTML={{__html: utility.convertMessage(description)}}></div>
             {
               this.state.following ?
             <div className="push-notification-config">

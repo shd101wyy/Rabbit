@@ -28,7 +28,6 @@ class Feed extends React.Component {
 
     const text = this.refs.text
     if (text) {
-      console.log('enter here')
       utility.formatHTMLElement(text)
     }
   }
@@ -50,7 +49,6 @@ class Feed extends React.Component {
   componentDidUpdate() {
     const text = this.refs.text
     if (text) {
-      console.log('enter here')
       utility.formatHTMLElement(text)
     }
   }
