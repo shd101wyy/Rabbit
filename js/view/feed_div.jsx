@@ -20,24 +20,26 @@ class FeedDiv extends React.Component {
   }
 
   componentDidMount() {
-    const elem = document.querySelector('.feed-div')
-    this.elem = elem
+    const elem = this.refs['feed-div']
     elem.addEventListener('scroll', this.handleScroll)
     this.getMoreFeeds()
   }
 
   componentWillUnmount() {
-    this.elem.removeEventListener('scroll', this.handleScroll)
+    const elem = this.refs['feed-div']
+    elem.removeEventListener('scroll', this.handleScroll)
   }
 
   componentDidUpdate() {
   }
 
   handleScroll() {
-    if (this.state.loadingFeeds || this.state.noMoreFeeds || !this.elem)
+    const elem = this.refs['feed-div']
+    if (this.state.loadingFeeds || this.state.noMoreFeeds || !elem) {
       return
-    let scrollBottom = this.elem.scrollTop + this.elem.offsetHeight,
-      scrollHeight = this.elem.scrollHeight
+    }
+    let scrollBottom = elem.scrollTop + elem.offsetHeight,
+      scrollHeight = elem.scrollHeight
 
     if (Math.abs(scrollBottom - scrollHeight) <= 100) {
       this.getMoreFeeds()
@@ -45,7 +47,9 @@ class FeedDiv extends React.Component {
   }
 
   getMoreFeeds() {
-    this.elem.removeEventListener('scroll', this.handleScroll)
+    const elem = this.refs['feed-div']
+    // console.log('get more feeds')
+    elem.removeEventListener('scroll', this.handleScroll)
     const {source, topic} = this.props
 
     const oldFeeds = (this.state.dis ? this.state.dis.feeds : []) || []
@@ -54,7 +58,8 @@ class FeedDiv extends React.Component {
         page = Math.floor(feedsCount / feedsPerPage)
 
     let callback = (data) => {
-      this.elem.addEventListener('scroll', this.handleScroll)
+      // console.log('callback')
+      elem.addEventListener('scroll', this.handleScroll)
 
       let dis = data.data
       let length = dis.feeds.length
@@ -113,7 +118,7 @@ class FeedDiv extends React.Component {
   render() {
     let dis = this.state.dis
     if (!dis || !dis.feeds || !dis.feeds.length) {
-      return <div className="feed-div">
+      return <div className="feed-div" ref="feed-div">
         {this.props.profile}
         <div className="status">
           No feeds :(
@@ -124,7 +129,7 @@ class FeedDiv extends React.Component {
     const {status} = this.state,
         {feeds} = dis
 
-    return <div className="feed-div">
+    return <div className="feed-div" ref="feed-div">
       {this.props.profile}
       {feeds.map((feed, offset) => {
         if (dis.source === 'localhost' || dis.source === 'topic') { // home feeds & topic feeds
