@@ -327,6 +327,12 @@ body input,
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.18);
   border-bottom: 1px solid rgba(63, 64, 85, 0.25);
   *zoom: 1;
+  /*
+  .message {
+    color: #555;
+    padding-left: 8px;
+  }
+  */
 }
 .feed:after,
 .feed:before {
@@ -397,6 +403,9 @@ body input,
   cursor: pointer;
 }
 .feed .feed-header .date {
+  position: absolute;
+  top: 10px;
+  right: 0;
   color: #8899a6;
 }
 .feed .title {
@@ -426,9 +435,11 @@ body input,
   padding-left: 0;
   font-size: 13px;
 }
-.feed .message {
-  color: #555;
-  padding-left: 8px;
+.feed .text {
+  padding: 0 8px;
+  padding-left: 0;
+  font-size: 13px;
+  margin-bottom: 12px;
 }
 .feed .show-article {
   margin-top: 8px;

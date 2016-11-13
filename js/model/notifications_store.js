@@ -12,6 +12,7 @@ socket.on('feed-notification', function(feed) {
   /**
   ipcRenderer.send('feed-notification', feed)
   */
+  console.log('receive notification')
   const notification = new Notification(feed.title, {
     body: feed.content.text,
     icon: feed.image || 'rabbit://images/rss-icon.png'
@@ -23,7 +24,7 @@ socket.on('feed-notification', function(feed) {
   }
 
   notificationsStore.notifications.forEach((n)=> {
-    if (n.source === source) {
+    if (n.source === feed.source) {
       n.unreadCount += 1
       return
     }
@@ -32,7 +33,6 @@ socket.on('feed-notification', function(feed) {
 })
 
 socket.on('marked-all-feeds-as-read', function({source, userId}) {
-  console.log('marked all feeds as read')
   notificationsStore.notifications.forEach((n)=> {
     if (n.source === source) {
       n.unreadCount = 0

@@ -45,7 +45,7 @@ class NotificationCard extends React.Component {
       text = text.slice(0, 60) + '...'
     }
 
-    return <div className="notification-card" onClick={()=> ipcRenderer.send('open-url', link)}>
+    return <div className="notification-card" onClick={this.showDISPage}>
         <div className="notification-sidebar">
           <img className="author-image" src={image}/>
         </div>

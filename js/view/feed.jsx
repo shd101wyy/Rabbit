@@ -25,6 +25,12 @@ class Feed extends React.Component {
         this.setState({articleSummary})
       })
     }
+
+    const text = this.refs.text
+    if (text) {
+      console.log('enter here')
+      utility.formatHTMLElement(text)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,6 +44,14 @@ class Feed extends React.Component {
       utility.getArticleSummary(feed.content.html, (articleSummary) => {
         this.setState({articleSummary})
       })
+    }
+  }
+
+  componentDidUpdate() {
+    const text = this.refs.text
+    if (text) {
+      console.log('enter here')
+      utility.formatHTMLElement(text)
     }
   }
 
@@ -116,7 +130,22 @@ class Feed extends React.Component {
         </div>
       </div>
     } else if (feed.type === 'text') { // TODO: support text
-      return <div> not supported </div>
+      return <div className="feed">
+        <div className="feed-sidebar">
+          <img className="author-image" src={disImage} onClick={this.showDISPage}/>
+        </div>
+        <div className="feed-container">
+          <div className="feed-header">
+            <div className="author" onClick={this.showDISPage}>{disTitle}</div>
+            <div className="date">{utility.formatDate(feed.updated)}</div>
+          </div>
+          <div className="content">
+            <div className="text" ref="text">
+              <span dangerouslySetInnerHTML={{__html: utility.convertMessage(feed.content.text || '')}}></span>
+            </div>
+          </div>
+        </div>
+      </div>
     }
   }
 }
