@@ -45,7 +45,7 @@ class NotificationCard extends React.Component {
       text = text.slice(0, 60) + '...'
     }
 
-    return <div className="notification-card" onClick={!unreadCount ? his.showDISPage : this.showDISPageAndMarkAllFeedsAsRead}>
+    return <div className="notification-card" onClick={!unreadCount ? this.showDISPage : this.showDISPageAndMarkAllFeedsAsRead}>
         <div className="notification-sidebar">
           <img className="author-image" src={image}/>
         </div>
