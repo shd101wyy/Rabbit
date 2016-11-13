@@ -129,6 +129,7 @@ module.exports = function({mainWin}) {
     event.sender.send('clear-history')
   })
 
+  /*
   ipcMain.on('alert-pending-notifications', function(event, data) {
     if (!Object.keys(data).length) return
     let message = ''
@@ -150,7 +151,7 @@ module.exports = function({mainWin}) {
         icon: path.resolve(__dirname, '../images/rss-icon.png'),
       })
     }, 2000)
-  })
+  })*/
 
   ipcMain.on('feed-notification', function(event, feed) { // check formatNotification in server.js
     sendNotification({

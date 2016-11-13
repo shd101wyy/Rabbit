@@ -9,47 +9,65 @@ socket.on('connect', function() {
 })
 
 socket.on('feed-notification', function(feed) {
+  /**
   ipcRenderer.send('feed-notification', feed)
+  */
+  const notification = new Notification(feed.title, {
+    body: feed.content.text,
+    icon: feed.image || 'rabbit://images/rss-icon.png'
+  })
+  if (feed.link) {
+    notification.onclick = function() {
+      ipcRenderer.send('open-url', feed.link)
+    }
+  }
+
+  notificationsStore.notifications.forEach((n)=> {
+    if (n.source === source) {
+      n.unreadCount += 1
+      return
+    }
+  })
+  notificationsStore.updateComponent()
 })
 
-socket.on('removed-pending-notifications', function({source, userId}) {
-  delete notificationsStore.pendingNotifications[source]
+socket.on('marked-all-feeds-as-read', function({source, userId}) {
+  console.log('marked all feeds as read')
+  notificationsStore.notifications.forEach((n)=> {
+    if (n.source === source) {
+      n.unreadCount = 0
+      return
+    }
+  })
   notificationsStore.updateComponent()
 })
 
 const notificationsStore = {
   notifications: [],
-  pendingNotifications: {},
   component: null,
   init() {
+    this.updateStore(()=> {
+      socket.emit('connect-user', userId)
+    })
+  },
+
+  updateStore(callback) {
     homeAPI.getNotificationsData((data)=> {
       if (data.success) {
-        let {notifications, pendingNotifications} = data.data
+        let {notifications} = data.data
         notifications.forEach((n)=> n.updated = new Date(n.updated))
         notifications.sort((a, b)=> b.updated - a.updated)
         this.notifications = notifications
-        this.pendingNotifications = pendingNotifications
 
-        // put title to pendingNotifications
-        notifications.forEach((n)=> {
-          if (!pendingNotifications[n.source]) return
-          pendingNotifications[n.source] = {
-            count: pendingNotifications[n.source],
-            title: n.title
-          }
-        })
-
-        console.log(pendingNotifications)
-        ipcRenderer.send('alert-pending-notifications', pendingNotifications)
         this.updateComponent()
+        if (callback) callback()
       }
     })
-    socket.emit('connect-user', userId)
   },
 
   updateComponent() {
     if (!this.component) return
-    this.component.setState({notifications: this.notifications, pendingNotifications: this.pendingNotifications})
+    this.component.setState({notifications: this.notifications})
   },
 
   bindComponent(component) {
@@ -57,8 +75,14 @@ const notificationsStore = {
     this.updateComponent()
   },
 
-  removePendingNotifications(source) {
-    socket.emit('remove-pending-notifications', {source, userId})
+  removeSource(source) {
+    this.notifications = this.notifications.filter((n)=> n.source !== source)
+    this.updateComponent()
+
+  },
+
+  markAllFeedsAsRead(source) {
+    socket.emit('mark-all-feeds-as-read', {source, userId})
   }
 }
 

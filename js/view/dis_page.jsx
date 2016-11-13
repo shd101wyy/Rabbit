@@ -4,6 +4,7 @@ import {browserHistory} from 'react-router'
 import FeedDiv from './feed_div.jsx'
 
 import homeAPI from '../api/home_api.js'
+import notificationsStore from '../model/notifications_store.js'
 import utility from '../utility.js'
 
 class DISPage extends React.Component {
@@ -45,6 +46,7 @@ class DISPage extends React.Component {
     homeAPI.follow(source, (data)=> {
       if (data.success) {
         this.setState({following: true, pushNotification: true})
+        notificationsStore.updateStore()
       }
     })
   }
@@ -55,6 +57,7 @@ class DISPage extends React.Component {
     homeAPI.unfollow(source, (data)=> {
       if (data.success) {
         this.setState({following: false, pushNotification: false})
+        notificationsStore.removeSource(source)
       }
     })
   }

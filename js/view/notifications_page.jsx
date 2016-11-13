@@ -13,7 +13,7 @@ class NotificationCard extends React.Component {
   constructor() {
     super()
     this.showDISPage = this.showDISPage.bind(this)
-    this.showDISPageAndRemovePendingNotification = this.showDISPageAndRemovePendingNotification.bind(this)
+    this.showDISPageAndMarkAllFeedsAsRead = this.showDISPageAndMarkAllFeedsAsRead.bind(this)
   }
 
   showDISPage(event) {
@@ -22,21 +22,23 @@ class NotificationCard extends React.Component {
     ipcRenderer.send('show-dis-page', source)
   }
 
-  showDISPageAndRemovePendingNotification(event) {
+  showDISPageAndMarkAllFeedsAsRead(event) {
     event.stopPropagation()
     const {source} = this.props.notification
     ipcRenderer.send('show-dis-page', source)
 
     const {notification} = this.props
-    notificationsStore.removePendingNotifications(notification.source)
+    notificationsStore.markAllFeedsAsRead(notification.source)
   }
 
   render() {
-    const {notification, pendingNotificationNum} = this.props
+    const {notification} = this.props
     const image = notification.image || 'rabbit://images/rss-icon.png',
         updated = notification.updated,
         title = notification.title,
-        link = notification.link
+        link = notification.link,
+        unreadCount = notification.unreadCount || 0
+
 
     let text = notification.content.text
     if (text.length >= 64) {
@@ -57,9 +59,9 @@ class NotificationCard extends React.Component {
           </div>
           <div className="notification-footer">
             {
-              !pendingNotificationNum ?
+              !unreadCount ?
               <i className="history-icon fa fa-clock-o" aria-hidden="true" onClick={this.showDISPage}></i> :
-              <span className="new badge" onClick={this.showDISPageAndRemovePendingNotification}>{pendingNotificationNum}</span>
+              <span className="new badge" onClick={this.showDISPageAndMarkAllFeedsAsRead}>{unreadCount}</span>
             }
           </div>
         </div>
@@ -72,7 +74,6 @@ class NotificationsPage extends React.Component {
     super()
     this.state = {
       notifications: [],
-      pendingNotifications: {}
     }
   }
 
@@ -81,7 +82,7 @@ class NotificationsPage extends React.Component {
   }
 
   render() {
-    const {notifications, pendingNotifications} = this.state
+    const {notifications} = this.state
     return <div className="page notifications-page">
       <div className="header">
         <div className="column-1-1">
@@ -91,9 +92,7 @@ class NotificationsPage extends React.Component {
       <div className="notifications-list">
       {
         notifications.map((n)=> {
-          const pendingNotification = pendingNotifications[n.source] || {}
-          let pendingNotificationNum = pendingNotification.count || 0
-          return <NotificationCard notification={n} pendingNotificationNum={pendingNotificationNum}></NotificationCard>
+          return <NotificationCard notification={n}></NotificationCard>
         })
       }
       </div>
